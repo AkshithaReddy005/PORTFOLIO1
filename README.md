@@ -41,6 +41,9 @@
   <a href="mailto:akshithareddy2405@gmail.com">
     <img src="https://img.shields.io/badge/Email-akshithareddy2405@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white"/>
   </a>
+  <a href="https://akshithareddy005.github.io/PORTFOLIO1/">
+    <img src="https://img.shields.io/badge/Portfolio-4EA94B?style=for-the-badge&logo=firefox-browser&logoColor=white"/>
+  </a>
 </p>
 
 
