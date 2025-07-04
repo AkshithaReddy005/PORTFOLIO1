@@ -3,6 +3,8 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- AOS Animate On Scroll CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akshitha Reddy - Portfolio</title>
@@ -856,6 +858,7 @@ body.theme-alt5 .achievement-icon {
     border-radius: 2px;
 }
 .experience-item {
+    /* AOS handles opacity and transform for scroll animations */
     position: relative;
     margin-bottom: 40px;
     padding: 22px 24px;
@@ -863,9 +866,6 @@ body.theme-alt5 .achievement-icon {
     border-radius: 12px;
     border: 1px solid rgba(6, 182, 212, 0.3);
     transition: all 0.4s cubic-bezier(.4,2,.6,1);
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: slideInExp 0.8s ease forwards;
     box-shadow: 0 4px 18px rgba(6, 182, 212, 0.10);
     perspective: 1000px;
 }
@@ -1935,24 +1935,24 @@ window.addEventListener('DOMContentLoaded',function(){
 
 
     <!-- Education Section -->
-    <section class="section" id="education">
+    <section class="section" id="education" data-aos="fade-up">
         <div class="container">
             <h2 class="section-title">Education</h2>
             <div class="education-content">
                 <ul class="education-list">
-                    <li class="education-item">
+                    <li class="education-item" data-aos="fade-left">
                         <div class="edu-text">
                             <h3>Vasavi College of Engineering, Hyderabad</h3>
                             <p>Bachelor of Engineering – Information Technology, 2023–2027<br>Pursuing 2nd Year, CGPA: 8.54</p>
                         </div>
                     </li>
-                    <li class="education-item">
+                    <li class="education-item" data-aos="fade-left">
                         <div class="edu-text">
                             <h3>Narayana Junior College, Madhapur</h3>
                             <p>Telangana State Board of Intermediate Education, 2021–2023<br>CGPA: 97.7%</p>
                         </div>
                     </li>
-                    <li class="education-item">
+                    <li class="education-item" data-aos="fade-left">
                         <div class="edu-text">
                             <h3>Narayana Olympiad School, Tarnaka</h3>
                             <p>State Board of Secondary Education, 2019–2021<br>Grade 10</p>
@@ -1964,12 +1964,12 @@ window.addEventListener('DOMContentLoaded',function(){
     </section>
 
     <!-- Experience Section -->
-    <section class="section" id="experience">
+    <section class="section" id="experience" data-aos="fade-up">
         <div class="container">
             <h2 class="section-title">Experience</h2>
             <div class="experience-content">
                 <ul class="experience-list">
-                        <li class="experience-item">
+                        <li class="experience-item" data-aos="fade-right" data-aos-delay="0">
         <div class="exp-content-flex">
             <span class="exp-icon"><i class="fas fa-robot"></i></span>
             <div class="exp-text">
@@ -1978,7 +1978,7 @@ window.addEventListener('DOMContentLoaded',function(){
             </div>
         </div>
     </li>
-    <li class="experience-item">
+    <li class="experience-item" data-aos="fade-left" data-aos-delay="150">
         <div class="exp-content-flex">
             <span class="exp-icon"><i class="fas fa-users"></i></span>
             <div class="exp-text">
@@ -1988,7 +1988,7 @@ window.addEventListener('DOMContentLoaded',function(){
         </div>
     </li>
 
-                      <li class="experience-item">
+                      <li class="experience-item" data-aos="zoom-in" data-aos-delay="300">
         <div class="exp-content-flex">
             <span class="exp-icon"><i class="fas fa-users"></i></span>
             <div class="exp-text">
@@ -2003,7 +2003,7 @@ window.addEventListener('DOMContentLoaded',function(){
     </section>
 
     <!-- About Section -->
-    <section class="section" id="about">
+    <section class="section" id="about" data-aos="fade-up">
         <div class="container">
             <div class="about-content">
     <div class="about-text">
@@ -2014,41 +2014,41 @@ window.addEventListener('DOMContentLoaded',function(){
     <div class="skills-category">
         <h4>Languages</h4>
         <div class="skills-grid">
-            <div class="skill-item"><i class="fab fa-java"></i> Java</div>
-            <div class="skill-item"><i class="fas fa-code"></i> C++</div>
-            <div class="skill-item"><i class="fas fa-code"></i> C</div>
-            <div class="skill-item"><i class="fab fa-python"></i> Python</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-java"></i> Java</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-code"></i> C++</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-code"></i> C</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-python"></i> Python</div>
         </div>
     </div>
     <div class="skills-category">
         <h4>Web Technologies</h4>
         <div class="skills-grid">
-            <div class="skill-item"><i class="fab fa-html5"></i> HTML</div>
-            <div class="skill-item"><i class="fab fa-css3-alt"></i> CSS</div>
-            <div class="skill-item"><i class="fab fa-js"></i> JavaScript</div>
-            <div class="skill-item"><i class="fab fa-node-js"></i> Node.js</div>
-            <div class="skill-item"><i class="fab fa-react"></i> React</div>
-            <div class="skill-item"><i class="fab fa-bootstrap"></i> Bootstrap</div>
-            <div class="skill-item"><i class="fab fa-js-square"></i> Express</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-html5"></i> HTML</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-css3-alt"></i> CSS</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-node-js"></i> Node.js</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-react"></i> React</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-bootstrap"></i> Bootstrap</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js-square"></i> Express</div>
         </div>
     </div>
     <div class="skills-category">
     <h4>Databases</h4>
     <div class="skills-grid">
-        <div class="skill-item"><i class="fas fa-server"></i> DBMS</div>
-        <div class="skill-item"><i class="fas fa-leaf" style="color:#47A248"></i> MongoDB</div>
+        <div class="skill-item" data-aos="zoom-in"><i class="fas fa-server"></i> DBMS</div>
+        <div class="skill-item" data-aos="zoom-in"><i class="fas fa-leaf" style="color:#47A248"></i> MongoDB</div>
     </div>
 </div>
     <div class="skills-category">
         <h4>Others</h4>
         <div class="skills-grid">
-            <div class="skill-item"><i class="fas fa-database"></i> Data Structures</div>
-            <div class="skill-item"><i class="fab fa-git-alt"></i> Git</div>
-            <div class="skill-item"><i class="fas fa-code"></i> VSCode</div>
-            <div class="skill-item"><i class="fas fa-users"></i> Leadership</div>
-            <div class="skill-item"><i class="fas fa-comments"></i> Communication</div>
-            <div class="skill-item"><i class="fas fa-clock"></i> Time Management</div>
-            <div class="skill-item"><i class="fas fa-user-friends"></i> Teamwork</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> Data Structures</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-git-alt"></i> Git</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-code"></i> VSCode</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-users"></i> Leadership</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-comments"></i> Communication</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-clock"></i> Time Management</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-user-friends"></i> Teamwork</div>
         </div>
     </div>
 </div>
@@ -2058,11 +2058,11 @@ window.addEventListener('DOMContentLoaded',function(){
     </section>
 
     <!-- Achievements Section -->
-    <section class="section" id="achievements">
+    <section class="section" id="achievements" data-aos="fade-up">
         <div class="container">
-            <h2 class="section-title">Achievements</h2>
+            <h2 class="section-title" data-aos="zoom-in" data-aos-delay="0">Achievements</h2>
             <ul class="achievements-list">
-                <li class="achievement-item">
+                <li class="achievement-item" data-aos="fade-right" data-aos-delay="0">
                     <div class="achievement-content">
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Finalist, Level Up Vibe Coding Hackathon 2025</h4>
@@ -2070,7 +2070,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </li>
-                <li class="achievement-item">
+                <li class="achievement-item" data-aos="fade-left" data-aos-delay="150">
                     <div class="achievement-content">
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Pre-Finalist, Smart India Hackathon (SIH) 2024</h4>
@@ -2078,7 +2078,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </li>
-                <li class="achievement-item">
+                <li class="achievement-item" data-aos="zoom-in" data-aos-delay="300">
                     <div class="achievement-content">
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Winner, WEBATHON 2025</h4>
@@ -2086,7 +2086,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </li>
-                    <li class="achievement-item">
+                    <li class="achievement-item" data-aos="fade-up" data-aos-delay="450">
                     <div class="achievement-content">
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Selected Participant – Amazon ML Summer School (GLT Cohort, July 2025)</h4>
@@ -2094,7 +2094,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </li>
-                    <li class="achievement-item">
+                    <li class="achievement-item" data-aos="fade-down" data-aos-delay="600">
                     <div class="achievement-content">
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Campus Ambassador – GirlScript Summer of Code 2025 (July 2025)</h4>
@@ -2107,11 +2107,11 @@ window.addEventListener('DOMContentLoaded',function(){
     </section>
 
     <!-- Projects Section -->
-    <section class="section" id="projects">
+    <section class="section" id="projects" data-aos="fade-up">
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
                         <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="WanderHub Project">
                     </div>
@@ -2125,7 +2125,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1zIwjCjspxCjyVDG6GfWg1p1n-HtVQLbtUA&s" alt="Voice-Activated Emergency System Project">
                     </div>
@@ -2138,7 +2138,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
                         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Fitness Tracker Project">
                     </div>
@@ -2151,7 +2151,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
                         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Learn-UPSC Project">
                     </div>
@@ -2165,7 +2165,7 @@ window.addEventListener('DOMContentLoaded',function(){
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
                         <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="City Route Planner Project">
                     </div>
@@ -2182,7 +2182,7 @@ window.addEventListener('DOMContentLoaded',function(){
         </div>
     </section>
 
-    <section class="section" id="philosophy">
+    <section class="section" id="philosophy" data-aos="fade-up">
   <div class="container">
     <div class="philosophy-glass-card philosophy-theme">
       <h2 class="philosophy-heading philosophy-quote-title"><span id="philosophy-typing"></span><span class="typing-cursor">|</span></h2>
@@ -2209,11 +2209,11 @@ window.addEventListener('DOMContentLoaded',function(){
 </section>
 
     <!-- Contact Section -->
-    <section class="section" id="contact">
-  <div class="contact-illustration">
+    <section class="section" id="contact" data-aos="fade-up">
+  <div class="contact-illustration" data-aos="zoom-in" data-aos-delay="0">
     <img src="https://www.blogsaays.com/wp-content/uploads/2022/11/android-gif-banner-2.gif" alt="Contact Illustration" class="contact-gif" loading="lazy" />
   </div>
-  <div class="contact-form-content">
+  <div class="contact-form-content" data-aos="zoom-in" data-aos-delay="100">
     <h2 class="get-in-touch-title">Get in Touch</h2>
     <form class="get-in-touch-form" action="mailto:akshithareddy005@gmail.com" method="POST" enctype="text/plain">
       <div class="input-group">
@@ -2232,7 +2232,7 @@ window.addEventListener('DOMContentLoaded',function(){
     </section>
 
     <!-- Thanks Section -->
-    <section class="section thanks-section thanks-theme">
+    <section class="section thanks-section thanks-theme" data-aos="fade-up">
       <div class="thanks-container">
         <h2 class="thanks-heading">Thank You!</h2>
         <p class="thanks-message">I appreciate your time and interest in my portfolio. Looking forward to connecting!</p>
@@ -2380,6 +2380,7 @@ body, html, * {
     border-radius: 2px;
 }
 .achievement-item {
+    /* AOS handles opacity and transform for scroll animations */
     position: relative;
     margin-bottom: 40px;
     padding: 20px;
@@ -2387,9 +2388,6 @@ body, html, * {
     border-radius: 10px;
     border: 1px solid rgba(6, 182, 212, 0.3);
     transition: all 0.4s ease;
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: slideIn 0.8s ease forwards;
     perspective: 1000px;
 }
 .achievement-item:nth-child(2) { animation-delay: 0.2s; }
@@ -2472,5 +2470,16 @@ body, html, * {
   }
 }
 </style>
+    <!-- AOS Animate On Scroll JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+          duration: 900,
+          once: true,
+          offset: 80
+        });
+      });
+    </script>
 </body>
 </html>
