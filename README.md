@@ -21,7 +21,7 @@
   <img src="https://raw.githubusercontent.com/AkshithaReddy005/AKSHITHA-REDDY/main/profile.gif" width="390" style="border-radius:50%;margin-bottom:10px;" alt="Profile GIF"/>
 
   <h3 align="center" style="font-size: 1.6rem; font-weight: bold; color: #333;">
-  🎓 2nd Year IT Student- @ Vasavi College of Engineering 
+  🎓 3rd Year IT Student- @ Vasavi College of Engineering 
   </h3>
   
 ### Web Dev and AI Enthusiast
