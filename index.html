@@ -1406,6 +1406,23 @@ body.theme-alt5 .achievement-icon {
     transform: scale(1.05);
 }
 
+.achievement-img-inline {
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 400px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.achievement-img-inline img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.achievement-img-inline:hover img {
+    transform: scale(1.02);
+}
+
 @media (max-width: 768px) {
     .carousel-track { height: 250px; }
     .hackathon-masonry { grid-template-columns: 1fr; }
@@ -2880,6 +2897,9 @@ window.addEventListener('DOMContentLoaded',function(){
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Pre-Finalist – Smart India Hackathon (SIH) 2024 &amp; 2025</h4>
                             <p class="details">Led team "Elite Hackers" to be among the Top 15 out of 50 teams in SIH 2024, developing a solution for a national-level challenge. Demonstrated leadership, technical depth, and collaborative problem-solving skills.</p>
+                            <div class="achievement-img-inline">
+                                <img src="sih.png" alt="SIH Hackathon">
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -2898,6 +2918,9 @@ window.addEventListener('DOMContentLoaded',function(){
                         <div class="achievement-text">
                             <h4><i class="fas fa-trophy achievement-icon"></i> Winner – WEBATHON 2025 (1st Place)</h4>
                             <p class="details">Secured 1st place among 50+ teams in a web development competition organized by ACUMEN IT-VCE. Demonstrated proficiency in full-stack development and UI design.</p>
+                            <div class="achievement-img-inline">
+                                <img src="webathon.jpg" alt="Webathon Winner">
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -2907,6 +2930,9 @@ window.addEventListener('DOMContentLoaded',function(){
                         <div class="achievement-text">
                             <h4><i class="fas fa-medal achievement-icon"></i> Winner – TechSavishkaar 2026 (2nd Place)</h4>
                             <p class="details">Achieved 2nd place in the prestigious TechSavishkaar competition, showcasing advanced technical skills and innovative problem-solving abilities.</p>
+                            <div class="achievement-img-inline">
+                                <img src="techsavishkaar.png" alt="TechSavishkaar Winner">
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -2933,16 +2959,6 @@ window.addEventListener('DOMContentLoaded',function(){
                     </div>
                 </li>
             </ul>
-
-            <!-- General Hackathon Gallery -->
-            <div class="hackathon-gallery-section" data-aos="fade-up">
-                <h3 class="gallery-title">Hackathon Highlights</h3>
-                <div class="hackathon-masonry">
-                    <div class="masonry-item"><img src="hackathon_1.png" alt="Hackathon Event 1"></div>
-                    <div class="masonry-item"><img src="hackathon_2.png" alt="Hackathon Event 2"></div>
-                    <div class="masonry-item"><img src="hackathon_3.png" alt="Hackathon Event 3"></div>
-                </div>
-            </div>
         </div>
     </section>
 
