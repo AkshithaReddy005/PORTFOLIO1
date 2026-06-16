@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -33,42 +33,194 @@
         }
 
         /* Loading Spinner with Enhanced Animation */
+        /* ===== CINEMATIC LOADER ===== */
         .loader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0e1a;
+            inset: 0;
+            background: #050811;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
-            transition: opacity 0.8s ease-out;
+            z-index: 9999;
+            overflow: hidden;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
         }
-
         .loader.hidden {
             opacity: 0;
+            visibility: hidden;
             pointer-events: none;
         }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #06b6d4;
-            border-top: 6px solid transparent;
+        /* Grid lines */
+        .loader-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(6,182,212,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6,182,212,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridPan 8s linear infinite;
+        }
+        @keyframes gridPan {
+            0%   { transform: translate(0,0); }
+            100% { transform: translate(60px,60px); }
+        }
+
+        /* Floating particles */
+        .loader-particles { position: absolute; inset: 0; pointer-events: none; }
+        .lp {
+            position: absolute;
             border-radius: 50%;
-            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite, pulse 2s ease-in-out infinite;
+            background: radial-gradient(circle, #06b6d4, transparent);
+            opacity: 0;
+            animation: lpFloat linear infinite;
+        }
+        @keyframes lpFloat {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.6; }
+            90%  { opacity: 0.3; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Corner accents */
+        .loader-corner {
+            position: absolute;
+            width: 48px; height: 48px;
+            border-color: #06b6d4;
+            border-style: solid;
+            opacity: 0.5;
+            animation: cornerPulse 2s ease-in-out infinite;
+        }
+        @keyframes cornerPulse { 0%,100%{opacity:0.3;} 50%{opacity:0.9;} }
+        .lc-tl { top:24px; left:24px;  border-width:2px 0 0 2px; }
+        .lc-tr { top:24px; right:24px; border-width:2px 2px 0 0; }
+        .lc-bl { bottom:24px; left:24px;  border-width:0 0 2px 2px; }
+        .lc-br { bottom:24px; right:24px; border-width:0 2px 2px 0; }
+
+        /* Orb glow */
+        .loader-orb {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #06b6d4 0%, #0e7490 40%, #050811 70%);
+            box-shadow: 0 0 60px #06b6d488, 0 0 120px #06b6d422;
+            position: relative;
+            animation: orbBreath 3s ease-in-out infinite;
+            margin-bottom: 2rem;
+            flex-shrink: 0;
+        }
+        @keyframes orbBreath {
+            0%,100% { box-shadow: 0 0 60px #06b6d488, 0 0 120px #06b6d422; transform: scale(1); }
+            50%     { box-shadow: 0 0 90px #06b6d4bb, 0 0 180px #06b6d444; transform: scale(1.06); }
+        }
+        .loader-orb::before {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.15);
+            animation: orbRing 4s linear infinite;
+        }
+        .loader-orb::after {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 1px dashed rgba(6,182,212,0.25);
+            animation: orbRing 8s linear infinite reverse;
+        }
+        @keyframes orbRing { to { transform: rotate(360deg); } }
+        .loader-orb-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+        /* Name */
+        .loader-name {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            position: relative;
+            margin-bottom: 0.3rem;
+        }
+        .loader-name span { color: #06b6d4; }
+        .loader-name::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0; top: 0;
+            color: #06b6d4;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            animation: glitch1 3s infinite;
+            opacity: 0.5;
+        }
+        .loader-name::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0; top: 0;
+            color: #f0abfc;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            animation: glitch2 3s infinite;
+            opacity: 0.4;
+        }
+        @keyframes glitch1 {
+            0%,90%,100% { transform: translate(0); }
+            92% { transform: translate(-3px, 1px); }
+            94% { transform: translate(3px,-1px); }
+            96% { transform: translate(-2px, 2px); }
+        }
+        @keyframes glitch2 {
+            0%,88%,100% { transform: translate(0); }
+            90% { transform: translate(3px, 2px); }
+            92% { transform: translate(-3px,-1px); }
+            94% { transform: translate(2px,-2px); }
+        }
+
+        /* Subtitle typewriter */
+        .loader-sub {
+            font-family: 'Fira Mono', monospace;
+            font-size: 0.8rem;
+            color: #06b6d4;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            min-height: 1.6rem;
+            max-width: 90vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        /* Progress bar */
+        .loader-bar-wrap {
+            width: clamp(200px, 40vw, 340px);
+            height: 3px;
+            background: rgba(6,182,212,0.12);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 0.7rem;
+        }
+        .loader-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #06b6d4);
+            background-size: 200% 100%;
+            border-radius: 99px;
+            transition: width 0.15s ease;
+            animation: barShimmer 2s linear infinite;
+        }
+        @keyframes barShimmer { 0%{background-position:0% 0;} 100%{background-position:200% 0;} }
+        .loader-pct {
+            font-family: 'Fira Mono', monospace;
+            font-size: 0.72rem;
+            color: rgba(6,182,212,0.6);
+            letter-spacing: 1px;
         }
 
         /* Video Background with Subtle Parallax */
@@ -303,6 +455,7 @@
         }
 
         /* Hero Section with Typing Animation */
+        /* ========== HERO SECTION ========== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -310,102 +463,510 @@
             position: relative;
             overflow: hidden;
             z-index: 10;
-            padding-top: 80px;
+            padding: 100px 0 60px;
+        }
+
+        /* Floating gradient orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(6,182,212,0.18), transparent 70%);
+            top: -100px; left: -100px;
+            animation: orbDrift1 12s ease-in-out infinite;
+        }
+        .hero-orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(139,92,246,0.14), transparent 70%);
+            bottom: -80px; right: -60px;
+            animation: orbDrift2 15s ease-in-out infinite;
+        }
+        .hero-orb-3 {
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(6,182,212,0.1), transparent 70%);
+            top: 50%; right: 30%;
+            animation: orbDrift1 18s ease-in-out infinite reverse;
+        }
+        @keyframes orbDrift1 {
+            0%,100% { transform: translate(0,0); }
+            50% { transform: translate(40px, 30px); }
+        }
+        @keyframes orbDrift2 {
+            0%,100% { transform: translate(0,0); }
+            50% { transform: translate(-30px, -20px); }
         }
 
         .hero-content {
             display: flex;
             align-items: center;
-            gap: 60px;
+            gap: 70px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* === Profile image === */
+        .hero-img-wrap {
+            flex-shrink: 0;
+            position: relative;
+            width: 280px;
+            height: 280px;
+        }
+        /* Single contained glow ring – no overflow */
+        .hero-img-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(6,182,212,0.4);
+            animation: heroRingSpin 10s linear infinite;
+        }
+        @keyframes heroRingSpin { to { transform: rotate(360deg); } }
+
+        .hero-img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(6,182,212,0.8);
+            box-shadow:
+                0 0 0 8px rgba(6,182,212,0.06),
+                0 0 40px rgba(6,182,212,0.35),
+                0 0 80px rgba(6,182,212,0.1);
+            transition: box-shadow 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-img:hover {
+            box-shadow:
+                0 0 0 8px rgba(6,182,212,0.1),
+                0 0 60px rgba(6,182,212,0.6),
+                0 0 120px rgba(6,182,212,0.2);
+        }
+        .hero-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        /* Status badge */
+        .hero-status {
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background: rgba(5,8,20,0.92);
+            border: 1px solid rgba(34,197,94,0.4);
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+        }
+        .hero-status-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: statusPing 1.8s ease-in-out infinite;
+        }
+        @keyframes statusPing {
+            0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+            50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+        }
+
+        /* === Text side === */
+        .hero-text { flex: 1; max-width: 640px; }
+
+        .hero-greeting {
+            font-family: 'Fira Mono', monospace;
+            font-size: 0.75rem;
+            color: #06b6d4;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-greeting::before, .hero-greeting::after {
+            content: '';
+            flex: 0 0 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #06b6d4);
+        }
+        .hero-greeting::after {
+            background: linear-gradient(90deg, #06b6d4, transparent);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.6rem, 5.5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -2px;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .hero h1 .name-grad {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 60%, #06b6d4 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: nameGrad 4s linear infinite;
+        }
+        @keyframes nameGrad { to { background-position: 200% center; } }
+
+        /* Role chips row */
+        .hero-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.4rem;
+        }
+        .hero-chip {
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid;
+        }
+        .chip-cyan  { border-color: rgba(6,182,212,0.4);  color: #06b6d4;  background: rgba(6,182,212,0.07);  }
+        .chip-purple{ border-color: rgba(139,92,246,0.4); color: #a78bfa; background: rgba(139,92,246,0.07); }
+        .chip-green { border-color: rgba(34,197,94,0.4);  color: #4ade80; background: rgba(34,197,94,0.07);  }
+
+        .hero p {
+            font-size: 14.5px;
+            line-height: 1.75;
+            margin-bottom: 1.4rem;
+            color: #94a3b8;
+            border-left: 2px solid rgba(6,182,212,0.5);
+            padding-left: 16px;
+        }
+
+        /* Stats grid */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-bottom: 1.6rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .hero-stat {
+            padding: 12px 8px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+        .hero-stat:last-child { border-right: none; }
+        .hero-stat-num {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #06b6d4;
+            line-height: 1;
+        }
+        .hero-stat-label {
+            font-size: 0.6rem;
+            color: #475569;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        /* Social links */
+        .hero-social {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.4rem;
+            flex-wrap: wrap;
+        }
+        .hero-social a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.09);
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            background: rgba(255,255,255,0.02);
+        }
+        .hero-social a:hover {
+            border-color: #06b6d4;
+            color: #06b6d4;
+            background: rgba(6,182,212,0.06);
+            transform: translateY(-2px);
+        }
+
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        @keyframes glow {
+            0%,100% { text-shadow: 0 0 8px rgba(6,182,212,0.5); }
+            50%      { text-shadow: 0 0 24px rgba(6,182,212,0.9), 0 0 48px rgba(6,182,212,0.3); }
+        }
+
+        /* ======= MOBILE HERO ======= */
+        @media (max-width: 768px) {
+            .hero { padding: 90px 0 40px; }
+            .hero-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 28px;
+            }
+            .hero-img-wrap { width: 200px; height: 200px; }
+            .hero-img-wrap::before { inset: -10px; }
+            .hero-img { width: 200px; height: 200px; }
+            .hero-orb-1 { width: 280px; height: 280px; top: -60px; left: -60px; }
+            .hero-orb-2 { width: 220px; height: 220px; }
+            .hero h1 { font-size: 2.4rem; letter-spacing: -1px; }
+            .hero-greeting { justify-content: center; }
+            .hero-chips { justify-content: center; }
+            .hero p { text-align: left; }
+            .hero-stats { grid-template-columns: repeat(2, 1fr); }
+            .hero-stat:nth-child(2) { border-right: none; }
+            .hero-stat:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.06); }
+            .hero-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.06); border-right: none; }
+            .hero-social { justify-content: center; }
+            .hero-btns { justify-content: center; }
+            .hero-status { font-size: 0.62rem; padding: 3px 10px; }
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 70px;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease forwards 0.5s;
         }
 
+        /* === Profile image with orbiting ring === */
+        .hero-img-wrap {
+            position: relative;
+            flex-shrink: 0;
+            width: 300px;
+            height: 300px;
+        }
+        .hero-img-ring {
+            position: absolute;
+            inset: -18px;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(6,182,212,0.35);
+            animation: heroRingSpin 12s linear infinite;
+        }
+        .hero-img-ring2 {
+            position: absolute;
+            inset: -36px;
+            border-radius: 50%;
+            border: 1px dashed rgba(139,92,246,0.2);
+            animation: heroRingSpin 20s linear infinite reverse;
+        }
+        @keyframes heroRingSpin { to { transform: rotate(360deg); } }
         .hero-img {
-            width: 320px;
-            height: 320px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             overflow: hidden;
-            border: 5px solid #06b6d4;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+            border: 3px solid #06b6d4;
+            box-shadow: 0 0 30px rgba(6,182,212,0.45), 0 0 80px rgba(6,182,212,0.12);
             transition: all 0.5s ease;
             position: relative;
+            z-index: 2;
         }
-
-        .hero-img::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, transparent 60%, rgba(6, 182, 212, 0.2));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .hero-img:hover::after {
-            opacity: 1;
-        }
-
         .hero-img:hover {
-            transform: scale(1.08) rotate(3deg);
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.7);
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(6,182,212,0.7), 0 0 100px rgba(6,182,212,0.2);
         }
-
         .hero-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
+        /* Status badge on image */
+        .hero-status {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 5;
+            background: rgba(10,14,26,0.9);
+            border: 1px solid rgba(6,182,212,0.4);
+            border-radius: 999px;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #06b6d4;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+        }
+        .hero-status-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: statusPing 1.8s ease-in-out infinite;
+        }
+        @keyframes statusPing {
+            0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+            50% { opacity:0.8; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+        }
+
         .hero-text {
-            max-width: 680px;
+            max-width: 660px;
+            flex: 1;
+        }
+
+        /* Greeting line */
+        .hero-greeting {
+            font-family: 'Fira Mono', monospace;
+            font-size: 0.82rem;
+            color: #06b6d4;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-greeting::before {
+            content: '';
+            display: inline-block;
+            width: 28px; height: 1.5px;
+            background: #06b6d4;
         }
 
         .hero h1 {
-            font-size: 40px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.1;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 900;
+            margin-bottom: 6px;
+            line-height: 1.05;
             color: #ffffff;
-            position: relative;
+            letter-spacing: -1px;
         }
-
         .hero h1 span {
             color: #06b6d4;
             animation: glow 2.5s ease-in-out infinite;
-            position: relative;
-            display: inline-block;
         }
 
-        .hero h1::after {
-            content: '|';
-            position: absolute;
-            color: #06b6d4;
-            animation: blink 0.7s infinite;
+        /* Animated role tag */
+        .hero-role {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.22);
+            border-radius: 999px;
+            padding: 5px 16px;
+            margin-bottom: 1.4rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        .hero-role span { color: #06b6d4; font-weight: 700; }
 
         @keyframes glow {
-            0%, 100% { text-shadow: 0 0 4px rgba(6, 182, 212, 0.4); }
-            50% { text-shadow: 0 0 10px rgba(6, 182, 212, 0.6); }
+            0%, 100% { text-shadow: 0 0 8px rgba(6,182,212,0.5); }
+            50% { text-shadow: 0 0 20px rgba(6,182,212,0.85), 0 0 40px rgba(6,182,212,0.3); }
         }
 
         .hero p {
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 32px;
-            color: #d1d5db;
-            background: rgba(255, 255, 255, 0.06);
-            padding: 18px;
-            border-radius: 10px;
+            font-size: 15px;
+            line-height: 1.75;
+            margin-bottom: 1.8rem;
+            color: #cbd5e1;
+            background: rgba(255,255,255,0.04);
+            padding: 18px 22px;
+            border-radius: 12px;
             border-left: 3px solid #06b6d4;
+            font-style: italic;
+            position: relative;
+        }
+        .hero p::before {
+            content: '\201C';
+            position: absolute;
+            top: -8px; left: 14px;
+            font-size: 3rem;
+            color: rgba(6,182,212,0.15);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        /* Stats row */
+        .hero-stats {
+            display: flex;
+            gap: 1.8rem;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #06b6d4;
+            line-height: 1;
+        }
+        .hero-stat-label {
+            font-size: 0.68rem;
+            color: #64748b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+        .hero-stat-divider {
+            width: 1px;
+            background: rgba(255,255,255,0.08);
+            align-self: stretch;
+        }
+
+        /* Social quick links */
+        .hero-social {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.6rem;
+            flex-wrap: wrap;
+        }
+        .hero-social a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.03);
+        }
+        .hero-social a:hover {
+            border-color: #06b6d4;
+            color: #06b6d4;
+            background: rgba(6,182,212,0.07);
+            transform: translateY(-2px);
         }
 
         .btn {
@@ -1874,6 +2435,35 @@ footer {
   z-index: 1;
 }
 
+/* ===== Project Category Headers ===== */
+.project-category-header {
+  margin: 2.5rem 0 1rem 0;
+  padding: 0;
+}
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+.category-badge i { font-size: 0.95rem; }
+.cat-ai   { background: linear-gradient(135deg,#1e3a5f,#0f2744); color: #60d8fa; border: 1.5px solid #06b6d4; }
+.cat-data { background: linear-gradient(135deg,#1f2937,#111827); color: #a78bfa; border: 1.5px solid #7c3aed; }
+.cat-web  { background: linear-gradient(135deg,#1a2e1a,#0d1f0d); color: #6ee7b7; border: 1.5px solid #059669; }
+.cat-algo { background: linear-gradient(135deg,#2d1f00,#1c1300); color: #fcd34d; border: 1.5px solid #d97706; }
+.category-desc {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin: 0.2rem 0 0 0;
+  padding-left: 0.2rem;
+  font-style: italic;
+}
+
 </style>
 </head>
 <body>
@@ -2056,9 +2646,97 @@ window.addEventListener('DOMContentLoaded',function(){
     });
     </script>
     <!-- Loading Spinner -->
-    <div class="loader">
-        <div class="spinner"></div>
+    <!-- ===== CINEMATIC LOADER ===== -->
+    <div class="loader" id="main-loader" aria-label="Loading portfolio">
+
+        <!-- Animated grid background -->
+        <div class="loader-grid"></div>
+
+        <!-- Corner accent brackets -->
+        <div class="loader-corner lc-tl"></div>
+        <div class="loader-corner lc-tr"></div>
+        <div class="loader-corner lc-bl"></div>
+        <div class="loader-corner lc-br"></div>
+
+        <!-- Floating particles (generated by JS below) -->
+        <div class="loader-particles" id="loader-particles"></div>
+
+        <!-- Orb icon -->
+        <div class="loader-orb">
+            <span class="loader-orb-icon">🧠</span>
+        </div>
+
+        <!-- Name with glitch effect -->
+        <div class="loader-name" data-text="Akshitha Reddy">Akshitha <span>Reddy</span></div>
+
+        <!-- Typewriter subtitle -->
+        <div class="loader-sub" id="loader-sub"></div>
+
+        <!-- Progress bar -->
+        <div class="loader-bar-wrap">
+            <div class="loader-bar" id="loader-bar"></div>
+        </div>
+        <div class="loader-pct" id="loader-pct">0%</div>
+
     </div>
+
+    <script>
+    // ===== CINEMATIC LOADER LOGIC =====
+    (function() {
+        // Spawn particles
+        const container = document.getElementById('loader-particles');
+        for (let i = 0; i < 22; i++) {
+            const p = document.createElement('div');
+            p.className = 'lp';
+            const size = Math.random() * 10 + 4;
+            p.style.cssText = [
+                `width:${size}px`, `height:${size}px`,
+                `left:${Math.random()*100}%`,
+                `animation-duration:${Math.random()*6+5}s`,
+                `animation-delay:${Math.random()*6}s`,
+                `opacity:0`
+            ].join(';');
+            container.appendChild(p);
+        }
+
+        // Single typewriter phrase — types once, cursor blinks
+        const phrase = 'git push origin dreams';
+        let ci = 0;
+        const subEl = document.getElementById('loader-sub');
+        function typeWriter() {
+            if (ci <= phrase.length) {
+                subEl.textContent = phrase.slice(0, ci);
+                ci++;
+                setTimeout(typeWriter, 80);
+            }
+        }
+        typeWriter();
+
+        // Progress bar animation
+        let pct = 0;
+        const barEl = document.getElementById('loader-bar');
+        const pctEl = document.getElementById('loader-pct');
+        const barTimer = setInterval(function() {
+            // Fast at first, slow near 100
+            const step = pct < 70 ? Math.random()*6+2 : Math.random()*1.5+0.3;
+            pct = Math.min(pct + step, 98);
+            barEl.style.width = pct + '%';
+            pctEl.textContent = Math.round(pct) + '%';
+        }, 120);
+
+        // Hide on window load
+        window.addEventListener('load', function() {
+            clearInterval(barTimer);
+            barEl.style.width = '100%';
+            pctEl.textContent = '100%';
+            setTimeout(function() {
+                const loader = document.getElementById('main-loader');
+                loader.classList.add('hidden');
+                setTimeout(function() { loader.style.display = 'none'; }, 950);
+            }, 400);
+        });
+    })();
+    </script>
 
     <!-- Video Background -->
     <video autoplay muted loop id="video-bg">
@@ -2092,23 +2770,75 @@ window.addEventListener('DOMContentLoaded',function(){
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Floating orb backgrounds -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+
         <div class="container">
             <div class="hero-content">
-                <div class="hero-img">
-                    <img src="https://lh3.google.com/u/0/d/1BIrOKwwJ4rWCdv14SspsVqXhXgw1gF4c=w1366-h641-iv1?auditContext=forDisplay" alt="Profile Image">
+
+                <!-- Profile -->
+                <div class="hero-img-wrap">
+                    <div class="hero-img">
+                        <img src="https://lh3.google.com/u/0/d/1BIrOKwwJ4rWCdv14SspsVqXhXgw1gF4c=w1366-h641-iv1?auditContext=forDisplay" alt="Akshitha Reddy">
+                    </div>
+                    <div class="hero-status">
+                        <div class="hero-status-dot"></div>
+                        Open to Opportunities
+                    </div>
                 </div>
+
+                <!-- Text -->
                 <div class="hero-text">
-                    <h1>Akshitha <span>Reddy</span></h1>
-                    <p>I’m a third-year Information Technology student and full-stack developer passionate about building scalable and user-focused software solutions. Skilled in Data Structures and Algorithms (DSA) using Java and the MERN stack, I enjoy transforming ideas into impactful, real-world applications.
+                    <div class="hero-greeting">Hello, World!</div>
 
-From national hackathons to academic projects, I bring creativity, problem-solving, and collaboration into every line of code.
+                    <h1>Akshitha <span class="name-grad">Reddy</span></h1>
 
-I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI, where I worked on fine-tuning large language models and optimizing their performance. Currently, I’m exploring AI-driven systems and advanced web technologies to create smarter and more connected digital experiences.</p>
-                    <a href="https://drive.google.com/file/d/14gyzGLQeU2MbqN72D098gMaXBvLcz-NK/view?usp=sharing" class="btn" target="_blank">View My Resume</a>
+                    <!-- Role chips -->
+                    <div class="hero-chips">
+                        <span class="hero-chip chip-cyan"><i class="fas fa-code"></i> Final-Year IT Student</span>
+                        <span class="hero-chip chip-purple"><i class="fas fa-layer-group"></i> Full-Stack Developer</span>
+                        <span class="hero-chip chip-green"><i class="fas fa-book"></i> IEEE Author</span>
+                    </div>
 
-<a href="https://drive.google.com/uc?export=download&id=14gyzGLQeU2MbqN72D098gMaXBvLcz-NK" class="btn" download>Download Resume</a>
+                    <!-- Bio -->
+                    <p>Engineering, at its core, is solving constraints through clean, performant systems — translating complex algorithmic logic into scalable, production-ready architectures and intelligent pipelines. Driven by IEEE research and national finals like Flipkart GRiD &amp; SIH.</p>
 
+                    <!-- Stats grid -->
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">12+</div>
+                            <div class="hero-stat-label">Projects</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">1</div>
+                            <div class="hero-stat-label">IEEE Paper</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">Top 48</div>
+                            <div class="hero-stat-label">Flipkart GRiD</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">8.49</div>
+                            <div class="hero-stat-label">CGPA</div>
+                        </div>
+                    </div>
+
+                    <!-- Social -->
+                    <div class="hero-social">
+                        <a href="https://github.com/AkshithaReddy005" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://www.linkedin.com/in/sudugu-akshitha-reddy-97b183259" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://ieeexplore.ieee.org/document/11290369" target="_blank"><i class="fas fa-book-open"></i> IEEE Paper</a>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="hero-btns">
+                        <a href="https://drive.google.com/file/d/14gyzGLQeU2MbqN72D098gMaXBvLcz-NK/view?usp=sharing" class="btn" target="_blank">View Resume</a>
+                        <a href="https://drive.google.com/uc?export=download&id=14gyzGLQeU2MbqN72D098gMaXBvLcz-NK" class="btn" style="background:transparent;border:2px solid #06b6d4;color:#06b6d4;" download>Download</a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -2123,7 +2853,7 @@ I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI,
                     <li class="education-item" data-aos="fade-left">
                         <div class="edu-text">
                             <h3>Vasavi College of Engineering, Hyderabad</h3>
-                            <p>Bachelor of Engineering – Information Technology, 2023–2027<br>Pursuing 3rd Year, CGPA: 8.49</p>
+                            <p>Bachelor of Engineering – Information Technology, 2023–2027<br>Pursuing Final Year (4th Year), CGPA: 8.49</p>
                         </div>
                     </li>
                     <li class="education-item" data-aos="fade-left">
@@ -2198,68 +2928,53 @@ I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI,
         transform: translateY(-3px);
     }
     </style>
+      <!-- Languages -->
     <div class="skills-category">
-        <h4><i class="fas fa-code"></i> Programming Languages</h4>
+        <h4><i class="fas fa-code"></i> Languages</h4>
         <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-java"></i> Java</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-java"></i> Java <span style="font-size:0.7rem;color:#06b6d4;">(Strong DSA Core)</span></div>
             <div class="skill-item" data-aos="zoom-in"><i class="fab fa-python"></i> Python</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-copyright"></i> C</div>
             <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-copyright"></i> C</div>
         </div>
     </div>
+    <!-- AI & Machine Learning -->
     <div class="skills-category">
-        <h4><i class="fas fa-server"></i> Backend & Distributed Systems</h4>
+        <h4><i class="fas fa-brain"></i> AI &amp; Machine Learning</h4>
         <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-flask"></i> Flask</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-robot"></i> Large Language Models (LLMs)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-sliders-h"></i> Fine-Tuning</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> RAG (Retrieval-Augmented Generation)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-gamepad"></i> Reinforcement Learning (Q-Learning)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-eye"></i> Computer Vision (BiLSTM)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-flask"></i> Gymnasium</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-network-wired"></i> TensorFlow</div>
+        </div>
+    </div>
+    <!-- Backend & Vector Infra -->
+    <div class="skills-category">
+        <h4><i class="fas fa-server"></i> Backend &amp; Vector Infra</h4>
+        <div class="skills-grid">
             <div class="skill-item" data-aos="zoom-in"><i class="fab fa-node-js"></i> Node.js (MERN)</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-plug"></i> REST APIs</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-bolt"></i> FastAPI</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-flask"></i> Flask</div>
             <div class="skill-item" data-aos="zoom-in"><i class="fas fa-search"></i> Elasticsearch</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> RAG Pipelines</div>
-        </div>
-    </div>
-    <div class="skills-category">
-        <h4><i class="fas fa-database"></i> Databases & Storage</h4>
-        <div class="skills-grid">
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-vector-square"></i> ChromaDB (Vector DB)</div>
             <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> PostgreSQL</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> MySQL</div>
             <div class="skill-item" data-aos="zoom-in"><i class="fas fa-leaf" style="color:#47A248"></i> MongoDB</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-vector-square"></i> ChromaDB</div>
         </div>
     </div>
+    <!-- Developer Tools -->
     <div class="skills-category">
-        <h4><i class="fas fa-brain"></i> ML & AI</h4>
+        <h4><i class="fas fa-tools"></i> Developer Tools</h4>
         <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-robot"></i> RL (Q-Learning)</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-chart-line"></i> ML Fundamentals</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-robot"></i> Gemini API</div>
-        </div>
-    </div>
-    <div class="skills-category">
-        <h4><i class="fas fa-laptop-code"></i> Web Development</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-html5"></i> HTML</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-css3-alt"></i> CSS</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-react"></i> React</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-bootstrap"></i> Bootstrap</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-map-marked-alt"></i> Leaflet</div>
-        </div>
-    </div>
-    <div class="skills-category">
-        <h4><i class="fas fa-tools"></i> Tools</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-git-alt"></i> Git/GitHub</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-git-alt"></i> Git / GitHub</div>
             <div class="skill-item" data-aos="zoom-in"><i class="fas fa-paper-plane"></i> Postman</div>
             <div class="skill-item" data-aos="zoom-in"><i class="fas fa-file-alt"></i> LaTeX</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-network-wired"></i> NFStream</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-shield-alt"></i> Snort</div>
         </div>
     </div>
-    <div class="skills-category">
-        <h4><i class="fas fa-laptop"></i> Core CS</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> Data Structures</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-sitemap"></i> Algorithms</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-cube"></i> OOP</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> DBMS</div>
-        </div>
     </div>
 </div>
                 </div>
@@ -2272,36 +2987,70 @@ I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI,
         <div class="container">
             <h2 class="section-title" data-aos="zoom-in" data-aos-delay="0">Achievements</h2>
             <ul class="achievements-list">
+                <!-- Achievement 1: Flipkart GRiD -->
                 <li class="achievement-item" data-aos="fade-right" data-aos-delay="0">
                     <div class="achievement-content">
                         <div class="achievement-text">
-                            <h4><i class="fas fa-trophy achievement-icon"></i> Finalist, Level Up Vibe Coding Hackathon 2025</h4>
-                            <p class="details">Recognized for innovative problem-solving in a competitive coding environment, conducted by OUTLIER.</p>
+                            <h4><i class="fas fa-bolt achievement-icon"></i> National Finalist – Flipkart GRiD 6.0 (Top 48)</h4>
+                            <p class="details">Ranked Top 48 among 1.6 lakh+ participants nationwide. Developed a smart Autosuggest and SRP (Search Results Page) system with regional language support using Elasticsearch, Node.js, and MongoDB. Presented the solution at Flipkart HQ, Bangalore.</p>
                         </div>
                     </div>
                 </li>
+                <!-- Achievement 2: SIH -->
                 <li class="achievement-item" data-aos="fade-left" data-aos-delay="150">
                     <div class="achievement-content">
                         <div class="achievement-text">
-                            <h4><i class="fas fa-trophy achievement-icon"></i> Pre-Finalist, Smart India Hackathon (SIH) 2024</h4>
-                            <p class="details">Led a team to develop a solution for a national-level challenge, showcasing leadership and technical expertise.</p>
+                            <h4><i class="fas fa-trophy achievement-icon"></i> Pre-Finalist – Smart India Hackathon (SIH) 2024 &amp; 2025</h4>
+                            <p class="details">Led team "Elite Hackers" to be among the Top 15 out of 50 teams in SIH 2024, developing a solution for a national-level challenge. Demonstrated leadership, technical depth, and collaborative problem-solving skills.</p>
                         </div>
                     </div>
                 </li>
-                <li class="achievement-item" data-aos="fade-left" data-aos-delay="150">
-  <div class="achievement-content">
-    <div class="achievement-text">
-      <h4><i class="fas fa-bolt achievement-icon"></i> Finalist, Flipkart GRiD – Top 48 (National Finale)</h4>
-      <p class="details">Selected among 1.6 lakh participants to be one of the top 48 finalists at Flipkart GRiD national finale, demonstrating innovation and leadership in e-commerce problem-solving.</p>
-    </div>
-  </div>
-</li>
-
-                <li class="achievement-item" data-aos="zoom-in" data-aos-delay="300">
+                <!-- Achievement 3: Level Up Vibe Coding -->
+                <li class="achievement-item" data-aos="fade-right" data-aos-delay="300">
                     <div class="achievement-content">
                         <div class="achievement-text">
-                            <h4><i class="fas fa-trophy achievement-icon"></i> Winner, WEBATHON 2025</h4>
-                            <p class="details">Secured first place in a web development competition organized by ACUMEN IT-VCE, demonstrating proficiency in full-stack development.</p>
+                            <h4><i class="fas fa-trophy achievement-icon"></i> Finalist – Level Up Vibe Coding Hackathon 2025</h4>
+                            <p class="details">Shortlisted as a finalist in this competitive coding event conducted by Outlier. Recognized for high-quality implementation and offered freelancing opportunities for the submitted work.</p>
+                        </div>
+                    </div>
+                </li>
+                <!-- Achievement 4: WEBATHON -->
+                <li class="achievement-item" data-aos="zoom-in" data-aos-delay="450">
+                    <div class="achievement-content">
+                        <div class="achievement-text">
+                            <h4><i class="fas fa-trophy achievement-icon"></i> Winner – WEBATHON 2025 (1st Place)</h4>
+                            <p class="details">Secured 1st place among 50+ teams in a web development competition organized by ACUMEN IT-VCE. Demonstrated proficiency in full-stack development and UI design.</p>
+                        </div>
+                    </div>
+                </li>
+                <!-- Achievement 5: TechSavishkaar -->
+                <li class="achievement-item" data-aos="fade-left" data-aos-delay="600">
+                    <div class="achievement-content">
+                        <div class="achievement-text">
+                            <h4><i class="fas fa-medal achievement-icon"></i> Winner – TechSavishkaar 2026 (2nd Place)</h4>
+                            <p class="details">Achieved 2nd place in the prestigious TechSavishkaar competition, showcasing advanced technical skills and innovative problem-solving abilities.</p>
+                        </div>
+                    </div>
+                </li>
+                <!-- Achievement 6: Social Summer of Code -->
+                <li class="achievement-item" data-aos="fade-right" data-aos-delay="750">
+                    <div class="achievement-content">
+                        <div class="achievement-text">
+                            <h4><i class="fas fa-star achievement-icon"></i> Top 30 Contributor – Social Summer of Code, Season 4</h4>
+                            <p class="details">Ranked among the top 30 contributors out of 1,300+ participants, delivering high-quality pull requests through feature additions, bug fixes, and active collaboration with open-source maintainers.</p>
+                        </div>
+                    </div>
+                </li>
+                <!-- Achievement 7: Certifications -->
+                <li class="achievement-item" data-aos="zoom-in" data-aos-delay="900">
+                    <div class="achievement-content">
+                        <div class="achievement-text">
+                            <h4><i class="fas fa-certificate achievement-icon"></i> Certifications</h4>
+                            <p class="details">
+                                🔐 <strong>Introduction to Cybersecurity</strong> – Cisco Networking Academy<br>
+                                ☕ <strong>NPTEL Certification</strong> – Java &amp; C Programming<br>
+                                🐍 <strong>Basics in Python</strong> – Infosys Springboard
+                            </p>
                         </div>
                     </div>
                 </li>
@@ -2313,57 +3062,146 @@ I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI,
     <section class="section" id="projects" data-aos="fade-up">
         <div class="container">
             <h2 class="section-title">Projects</h2>
+
+            <!-- ===== CATEGORY 1: AI, ML & Optimization ===== -->
+            <div class="project-category-header" data-aos="fade-up">
+                <span class="category-badge cat-ai"><i class="fas fa-brain"></i> AI, Machine Learning &amp; Optimization</span>
+                <p class="category-desc">Algorithmic math, reinforcement learning, custom simulation environments, and predictive sequence modeling.</p>
+            </div>
             <div class="projects-grid">
-                <div class="project-card" data-aos="zoom-in-up">
-    <div class="project-img">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwOht9Eg2u_qQVQ_CjizJ1K8A0bZTqjEPjw&s" alt="Flipkart GRiD 7.0 Project">
-    </div>
-    <div class="project-info">
-        <h3>Flipkart GRiD 7.0 – Smart Product Discovery</h3>
-        <p>Finalist project from Flipkart GRiD 7.0 Software Development Track. Developed a smart and scalable Autosuggest & Search Results Page (SRP) system with multilingual support, real-time intelligent suggestions, and contextual product ranking using dynamic filters. Integrated Google Gemini AI for typo-tolerant search, natural language queries like "shoes under 500," and personalized recommendations.</p>
-        <p class="tech-stack">Tech Stack: Node.js, MongoDB, Elasticsearch, Google Gemini AI</p>
-        <div class="project-links">
-            <a href="https://github.com/AkshithaReddy005/Team-Synergy-Grid_Flipkart-Grid-7.0" target="_blank">Source Code</a>
-        </div>
-    </div>
-</div>
-                <div class="project-card" data-aos="zoom-in-up">
-  <div class="project-img">
-    <img src="https://i.ibb.co/KjMMXNDM/icon.png" alt="FloatChat Project">
-  </div>
-  <div class="project-info">
-    <h3>🌊 FloatChat — AI-Powered ARGO Ocean Data Interface</h3>
-    <p>
-      Built an intelligent RAG-based system to analyze 50+ years of ARGO ocean data using natural language queries. Reduced data analysis time from hours to seconds with a dual-database architecture and an intuitive React–powered dashboard.
-    </p>
-    <p class="tech-stack">Tech Stack: Python, FastAPI, ChromaDB, PostgreSQL, Gemini AI, React, TypeScript</p>
-    <div class="project-links">
-      <a href="https://github.com/AkshithaReddy005/flowchat" target="_blank">Source Code</a>
-    </div>
-  </div>
-</div>
-                <div class="project-card" data-aos="zoom-in-up">
-  <div class="project-img">
-    <img src="https://i.ibb.co/fYMgkdK8/ICON.jpg" alt="MASTR-Q Project">
-  </div>
-  <div class="project-info">
-    <h3>🧠 MASTR-Q — Multi-Agent Routing with Q-Learning</h3>
-    <p>
-      Developed a reinforcement-learning–driven routing system achieving 100% customer service on Solomon C104. Implemented tabular Q-learning with UCB exploration and built a custom Gymnasium environment with curriculum training.
-    </p>
-    <p class="tech-stack">Tech Stack: Python, Gymnasium, NumPy, Reinforcement Learning</p>
-    <div class="project-links">
-      <a href="https://github.com/AkshithaReddy005/MASTR" target="_blank">Source Code</a>
-    </div>
-  </div>
-</div>
+
+                <!-- MASTR-Q -->
                 <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="WanderHub Project">
+                        <img src="https://i.ibb.co/fYMgkdK8/ICON.jpg" alt="MASTR-Q Project">
                     </div>
                     <div class="project-info">
-                        <h3>WanderHub</h3>
-                        <p>Developed a responsive web application for exploring travel destinations, featuring curated travel insights and an intuitive interface for seamless trip planning.</p>
+                        <h3>🧠 MASTR-Q &mdash; Multi-Agent Routing Optimization</h3>
+                        <p>Designed a custom Markov Decision Process (MDP) inside a Gymnasium reinforcement learning environment to resolve complex vehicle routing problems with dynamic constraints, benchmarking a 100% service rate convergence on standard Solomon C104 datasets while reducing heuristic processing execution limits by 40%.</p>
+                        <p class="tech-stack">Tech Stack: Python, Gymnasium, NumPy, Tabular Q-Learning, UCB Exploration</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/MASTR" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IEEE GLOF Publication -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="GLOF Deep Learning IEEE">
+                    </div>
+                    <div class="project-info">
+                        <h3>📡 GLOF Predictive Deep Learning Framework <span style="font-size:0.72rem;background:linear-gradient(90deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;letter-spacing:1px;">IEEE PUBLISHED</span></h3>
+                        <p>Co-authored and deployed a sequential deep learning framework featuring a Bidirectional LSTM (BiLSTM) architecture to track and predict catastrophic Glacial Lake Outburst Floods. Developed an automated streaming ingestion layer to consume heterogeneous IoT sensor streams and remote sensing telemetry, paired with a real-time predictive disaster risk dashboard.</p>
+                        <p class="tech-stack">Tech Stack: Python, TensorFlow, Flask, BiLSTM, scikit-learn, IoT Ingestion</p>
+                        <div class="project-links">
+                            <a href="https://ieeexplore.ieee.org/document/11290369" target="_blank">View Publication</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /projects-grid cat1 -->
+
+            <!-- ===== CATEGORY 2: Data Engineering & Production Backends ===== -->
+            <div class="project-category-header" data-aos="fade-up">
+                <span class="category-badge cat-data"><i class="fas fa-server"></i> Data Engineering &amp; Production Backends</span>
+                <p class="category-desc">High-throughput data infrastructure, asynchronous pipelines, distributed search, and low-latency query execution.</p>
+            </div>
+            <div class="projects-grid">
+
+                <!-- Flipkart GRiD -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwOht9Eg2u_qQVQ_CjizJ1K8A0bZTqjEPjw&s" alt="Flipkart GRiD 7.0">
+                    </div>
+                    <div class="project-info">
+                        <h3>🛒 Flipkart GRiD 7.0 &mdash; Smart Product Discovery <span style="font-size:0.72rem;background:linear-gradient(90deg,#06b6d4,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;">NATIONAL FINALIST · TOP 48</span></h3>
+                        <p>Architected an asynchronous, horizontally scalable Search Results Page (SRP) and auto-suggest microservice architecture utilizing an Elasticsearch cluster indexing layer and MongoDB. Integrated LLM semantic embeddings via the Gemini API to map complex natural language queries to contextual product dimensions, designing custom dynamic metadata filtering layers for low-latency ranking.</p>
+                        <p class="tech-stack">Tech Stack: Node.js, Elasticsearch, MongoDB, Google Gemini AI, REST APIs</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/Team-Synergy-Grid_Flipkart-Grid-7.0" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FloatChat -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://i.ibb.co/KjMMXNDM/icon.png" alt="FloatChat Project">
+                    </div>
+                    <div class="project-info">
+                        <h3>🌊 FloatChat &mdash; AI-Powered Oceanographic RAG Pipeline</h3>
+                        <p>Engineered an end-to-end Retrieval-Augmented Generation (RAG) pipeline utilizing FastAPI and ChromaDB vector space indices to query 50+ years of multi-dimensional NetCDF oceanographic datasets. Implemented a dual-database syncing architecture (PostgreSQL + ChromaDB) with optimized metadata caching to accelerate spatial query execution from high-overhead disk reads to sub-second runtime latency.</p>
+                        <p class="tech-stack">Tech Stack: Python, FastAPI, ChromaDB, PostgreSQL, Gemini AI, React, TypeScript</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/flowchat" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ZeroTrust-AI -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="ZeroTrust-AI">
+                    </div>
+                    <div class="project-info">
+                        <h3>🛡️ ZeroTrust-AI &mdash; Deep Learning Cybersecurity Pipeline</h3>
+                        <p>Constructed an end-to-end network intrusion engineering pipeline to process ~50 GB of raw continuous packet capture telemetry. Integrated high-performance packet-to-flow conversion using NFStream, executing Snort rule-matching for ground-truth labeling across 240,000 communication flows, and training a stacked neural framework (TCN + Autoencoders + GAN) yielding a 0.908 AUC-ROC within sub-100ms latency limits.</p>
+                        <p class="tech-stack">Tech Stack: Python, NFStream, Snort, TCN, Autoencoders, GAN, MLP Meta-Learner</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/ZeroTrustAI" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /projects-grid cat2 -->
+
+            <!-- ===== CATEGORY 3: Interactive Applications & Full-Stack Systems ===== -->
+            <div class="project-category-header" data-aos="fade-up">
+                <span class="category-badge cat-web"><i class="fas fa-laptop-code"></i> Interactive Applications &amp; Full-Stack Systems</span>
+                <p class="category-desc">Dynamic web applications, state management frameworks, utility apps, and custom user portals.</p>
+            </div>
+            <div class="projects-grid">
+
+                <!-- LearnHub -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://i.ibb.co/BK5jyKcX/learhub.jpg" alt="Learning & Study Hub with Shinchan">
+                    </div>
+                    <div class="project-info">
+                        <h3>📚 Learning &amp; Study Hub with Shinchan</h3>
+                        <p>Engineered a responsive full-stack platform featuring custom authentication, automated bookmark management layers, an integrated AI learning assistant, and an optimized MySQL asset database schema wrapped in an immersive, themed user experience.</p>
+                        <p class="tech-stack">Tech Stack: HTML, CSS, JavaScript, Node.js, Express, MySQL, JWT, Multer</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/LEARNHUB" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Akashpath -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://i.ibb.co/F4Hmxz4F/LOGO.jpg" alt="Akashpath ISRO">
+                    </div>
+                    <div class="project-info">
+                        <h3>🌌 Akashpath: Tracing ISRO&rsquo;s Journey</h3>
+                        <p>Developed a high-performance full-stack web platform showcasing planetary mission timelines. Engineered custom UI rendering engines optimized for live data visualizations of aerospace milestones and spatial flight analytics.</p>
+                        <p class="tech-stack">Tech Stack: React, Vite, TailwindCSS, Express.js, TypeScript</p>
+                        <div class="project-links">
+                            <a href="https://akshithareddy005.github.io/ISRO/" target="_blank">Live Demo</a>
+                            <a href="https://github.com/AkshithaReddy005/ISRO" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WanderHub -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="WanderHub">
+                    </div>
+                    <div class="project-info">
+                        <h3>✈️ WanderHub</h3>
+                        <p>Created a responsive client-facing web system optimized for exploring geographic travel nodes, parsing live destination insights, and utilizing a streamlined UX architecture for itinerary planning.</p>
                         <p class="tech-stack">Tech Stack: HTML, CSS, JavaScript</p>
                         <div class="project-links">
                             <a href="https://akshithareddy005.github.io/WANDERHUB/" target="_blank">Live Demo</a>
@@ -2371,41 +3209,31 @@ I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI,
                         </div>
                     </div>
                 </div>
-               <div class="project-card" data-aos="zoom-in-up">
-    <div class="project-img">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1zIwjCjspxCjyVDG6GfWg1p1n-HtVQLbtUA&s" alt="Voice-Activated Emergency System Project">
-    </div>
-    <div class="project-info">
-        <h3>Voice-Activated Emergency System</h3>
-        <p>Engineered a system to detect distress signals via voice triggers, sending real-time, location-based alerts to responders and trusted contacts.</p>
-        <p class="tech-stack">Tech Stack: Python, HTML, CSS, JavaScript</p>
-        <div class="project-links">
-            <a href="https://github.com/AkshithaReddy005/VOICE-ACTIVATED-EMERGENCY-SYSTEM" target="_blank">Source Code</a>
-        </div>
-    </div>
-</div>
 
-
+                <!-- SoulSpace -->
                 <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Fitness Tracker Project">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwuG9cMOV-VmrcDS-9EqfjszA2HowyE1vhoQ&s" alt="SoulSpace">
                     </div>
                     <div class="project-info">
-                        <h3>Fitness Tracker</h3>
-                        <p>Built a robust system for detecting distress signals through voice triggers, integrated with a responsive interface and real-time backend logic for emergency tracking.</p>
-                        <p class="tech-stack">Tech Stack: Java</p>
+                        <h3>🌌 SoulSpace</h3>
+                        <p>Designed and launched a front-end portal dedicated to mental wellbeing, integrating media-streaming logic for music therapy pipelines, session logging counters, and interactive stress-reduction interfaces.</p>
+                        <p class="tech-stack">Tech Stack: HTML, CSS, JavaScript</p>
                         <div class="project-links">
-                            <a href="https://github.com/AkshithaReddy005/FITNESS-TRACKER" target="_blank">Source Code</a>
+                            <a href="https://akshithareddy005.github.io/SoulSpace/" target="_blank">Live Demo</a>
+                            <a href="https://github.com/AkshithaReddy005/SoulSpace" target="_blank">Source Code</a>
                         </div>
                     </div>
                 </div>
+
+                <!-- Learn-UPSC -->
                 <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Learn-UPSC Project">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Learn-UPSC">
                     </div>
                     <div class="project-info">
-                        <h3>Learn-UPSC</h3>
-                        <p>Designed a streamlined, responsive interface for UPSC aspirants, prioritizing intuitive navigation and user-focused design.</p>
+                        <h3>📖 Learn-UPSC</h3>
+                        <p>Formulated an intuitive, user-centric educational platform prioritizing structural data hierarchies and optimized client-side navigation paths for complex test-preparation materials.</p>
                         <p class="tech-stack">Tech Stack: HTML, CSS, JavaScript</p>
                         <div class="project-links">
                             <a href="https://akshithareddy005.github.io/LEARN-UPSC/" target="_blank">Live Demo</a>
@@ -2413,67 +3241,66 @@ I’ve also gained hands-on experience as a Freelance LLM Trainer at Outlier AI,
                         </div>
                     </div>
                 </div>
+
+            </div><!-- /projects-grid cat3 -->
+
+            <!-- ===== CATEGORY 4: Algorithmic Systems & Local Automations ===== -->
+            <div class="project-category-header" data-aos="fade-up">
+                <span class="category-badge cat-algo"><i class="fas fa-microchip"></i> Algorithmic Systems &amp; Local Automations</span>
+                <p class="category-desc">Core software development lifecycle foundations, lower-level language designs, and hardware-level alerts.</p>
+            </div>
+            <div class="projects-grid">
+
+                <!-- City Route Planner -->
                 <div class="project-card" data-aos="zoom-in-up">
                     <div class="project-img">
-                        <img src="https://i.ibb.co/Kxg0bxcG/city-route.jpg" alt="City Route Planner Project">
+                        <img src="https://i.ibb.co/Kxg0bxcG/city-route.jpg" alt="City Route Planner">
                     </div>
                     <div class="project-info">
-                        <h3>City Route Planner</h3>
-                        <p>Developed a Java-based solution modeling city road networks, utilizing Dijkstra’s algorithm for optimized routing and cycle detection for network reliability.</p>
-                        <p class="tech-stack">Tech Stack: Java</p>
+                        <h3>🗺️ City Road Network Route Planner</h3>
+                        <p>Modeled dense, high-volume city road networks through a custom Java optimization system. Implemented Dijkstra&rsquo;s algorithm for low-overhead shortest-path discovery and graph-based cycle detection algorithms to enforce network topology reliability.</p>
+                        <p class="tech-stack">Tech Stack: Java, Advanced Data Structures, Graph Traversal Algorithms</p>
                         <div class="project-links">
                             <a href="https://github.com/AkshithaReddy005/CITY-ROUTE-PLANNER" target="_blank">Source Code</a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card" data-aos="zoom-in-up">
-  <div class="project-img">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwuG9cMOV-VmrcDS-9EqfjszA2HowyE1vhoQ&s" alt="SoulSpace Project">
-  </div>
-  <div class="project-info">
-    <h3>🌌 SoulSpace</h3>
-    <p>Your Digital Sanctuary for Mindfulness & Joyful Living. Features include music therapy, meditation, kids activities, mindful reads, and more to help users relax and recharge.</p>
-    <p class="tech-stack">Tech Stack: HTML, CSS, JavaScript</p>
-    <div class="project-links">
-      <a href="https://akshithareddy005.github.io/SoulSpace/" target="_blank">Live Demo</a>
-      <a href="https://github.com/AkshithaReddy005/SoulSpace" target="_blank">Source Code</a>
-    </div>
-  </div>
-</div>
-<div class="project-card" data-aos="zoom-in-up">
-  <div class="project-img">
-    <img src="https://i.ibb.co/BK5jyKcX/learhub.jpg" alt="Learning & Study Hub with Shinchan">
-  </div>
-  <div class="project-info">
-    <h3>📚 Learning & Study Hub with Shinchan 🌍</h3>
-    <p>A modern, interactive platform to manage courses, notes, and bookmarks — all themed around the fun and lovable Shinchan! Includes a smart learning assistant, AI-powered search, and stunning UI.</p>
-    <p class="tech-stack">Tech Stack: HTML, CSS, JavaScript, Node.js, Express, MySQL, JWT, Multer</p>
-    <div class="project-links">
-      
-      <a href="https://github.com/AkshithaReddy005/LEARNHUB" target="_blank">Source Code</a>
-    </div>
-  </div>
-</div>
-<div class="project-card" data-aos="zoom-in-up">
-  <div class="project-img">
-    <img src="https://i.ibb.co/F4Hmxz4F/LOGO.jpg" alt="Akashpath Full-Stack Project" />
-  </div>
-  <div class="project-info">
-    <h3>🌌 Akashpath: Tracing ISRO’s Journey (Full-Stack)</h3>
-    <p>
-      A dynamic full-stack web platform celebrating ISRO’s space legacy. Combines an immersive UI with real-time data rendering of ISRO’s missions, scientists, and milestones. Ready for deployment and expansion.
-    </p>
-    <p class="tech-stack">Tech Stack: React, Vite, TailwindCSS, Express.js, TypeScript</p>
-    <div class="project-links">
-      <a href="https://akshithareddy005.github.io/ISRO/" target="_blank">Live Demo</a>
-      <a href="https://github.com/AkshithaReddy005/ISRO" target="_blank">Source Code</a>
-    </div>
-  </div>
-</div>
 
-            </div>
+                <!-- Voice Emergency System -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="voice_emergency.png" alt="Voice-Activated Emergency System">
+                    </div>
+                    <div class="project-info">
+                        <h3>🚨 Voice-Activated Emergency System</h3>
+                        <p>Engineered a multi-threaded backend automation to parse raw audio frequencies for distress vocal patterns. Coupled with background scripts to programmatically fetch local telemetry vectors and broadcast automated real-time alert frames to responders and emergency contacts.</p>
+                        <p class="tech-stack">Tech Stack: Python, HTML, CSS, JavaScript</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/VOICE-ACTIVATED-EMERGENCY-SYSTEM" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fitness Tracker -->
+                <div class="project-card" data-aos="zoom-in-up">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Fitness Tracker">
+                    </div>
+                    <div class="project-info">
+                        <h3>🏃 Fitness Tracker</h3>
+                        <p>Developed a foundational object-oriented system using strict type architectures to map user training datasets, parse incoming physiological signals, and structure underlying data processing rules.</p>
+                        <p class="tech-stack">Tech Stack: Java, Object-Oriented Programming (OOP)</p>
+                        <div class="project-links">
+                            <a href="https://github.com/AkshithaReddy005/FITNESS-TRACKER" target="_blank">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /projects-grid cat4 -->
+
         </div>
     </section>
+
 
     <section class="section" id="philosophy" data-aos="fade-up">
   <div class="container">
