@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -455,518 +455,281 @@
         }
 
         /* Hero Section with Typing Animation */
-        /* ========== HERO SECTION ========== */
+        /* ========== HERO SECTION (PREMIUM OVERHAUL) ========== */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             position: relative;
             overflow: hidden;
             z-index: 10;
-            padding: 100px 0 60px;
+            padding: 120px 20px 80px;
+            text-align: center;
         }
 
-        /* Floating gradient orbs */
+        /* Immersive Dynamic Background */
+        .hero-bg-fx {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 60%);
+        }
         .hero-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-            z-index: 0;
+            filter: blur(100px);
+            opacity: 0.6;
         }
-        .hero-orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(6,182,212,0.18), transparent 70%);
-            top: -100px; left: -100px;
-            animation: orbDrift1 12s ease-in-out infinite;
+        .hero-orb-cyan {
+            width: 45vw; height: 45vw;
+            background: rgba(6,182,212,0.25);
+            top: -10vw; left: -10vw;
+            animation: floatOrb 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .hero-orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(139,92,246,0.14), transparent 70%);
-            bottom: -80px; right: -60px;
-            animation: orbDrift2 15s ease-in-out infinite;
+        .hero-orb-purple {
+            width: 40vw; height: 40vw;
+            background: rgba(139,92,246,0.2);
+            bottom: -5vw; right: -10vw;
+            animation: floatOrb 25s infinite alternate-reverse cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .hero-orb-3 {
-            width: 250px; height: 250px;
-            background: radial-gradient(circle, rgba(6,182,212,0.1), transparent 70%);
-            top: 50%; right: 30%;
-            animation: orbDrift1 18s ease-in-out infinite reverse;
-        }
-        @keyframes orbDrift1 {
-            0%,100% { transform: translate(0,0); }
-            50% { transform: translate(40px, 30px); }
-        }
-        @keyframes orbDrift2 {
-            0%,100% { transform: translate(0,0); }
-            50% { transform: translate(-30px, -20px); }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5vw, 5vw) scale(1.1); }
         }
 
         .hero-content {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 70px;
+            max-width: 900px;
+            width: 100%;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.5s;
+            transform: translateY(40px);
+            animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
             position: relative;
             z-index: 2;
         }
+        @keyframes heroReveal { to { opacity: 1; transform: translateY(0); } }
 
-        /* === Profile image === */
-        .hero-img-wrap {
-            flex-shrink: 0;
+        /* === Premium Profile Container === */
+        .hero-avatar-container {
             position: relative;
-            width: 280px;
-            height: 280px;
-        }
-        /* Single contained glow ring – no overflow */
-        .hero-img-wrap::before {
-            content: '';
-            position: absolute;
-            inset: -12px;
+            margin-bottom: 2rem;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
-            border: 1.5px dashed rgba(6,182,212,0.4);
-            animation: heroRingSpin 10s linear infinite;
+            padding: 8px;
+            background: linear-gradient(135deg, rgba(6,182,212,0.5), rgba(139,92,246,0.5));
+            box-shadow: 0 0 40px rgba(6,182,212,0.2), inset 0 0 20px rgba(255,255,255,0.1);
+            animation: floatAvatar 6s ease-in-out infinite;
         }
-        @keyframes heroRingSpin { to { transform: rotate(360deg); } }
-
-        .hero-img {
-            width: 280px;
-            height: 280px;
+        @keyframes floatAvatar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .hero-avatar-inner {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid rgba(6,182,212,0.8);
-            box-shadow:
-                0 0 0 8px rgba(6,182,212,0.06),
-                0 0 40px rgba(6,182,212,0.35),
-                0 0 80px rgba(6,182,212,0.1);
-            transition: box-shadow 0.5s ease;
+            background: #050814;
+            border: 4px solid #050814;
             position: relative;
             z-index: 2;
         }
-        .hero-img:hover {
-            box-shadow:
-                0 0 0 8px rgba(6,182,212,0.1),
-                0 0 60px rgba(6,182,212,0.6),
-                0 0 120px rgba(6,182,212,0.2);
-        }
-        .hero-img img {
+        .hero-avatar-inner img {
             width: 100%; height: 100%;
             object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .hero-avatar-container:hover .hero-avatar-inner img {
+            transform: scale(1.1);
         }
 
-        /* Status badge */
-        .hero-status {
+        /* Dynamic Status Pill */
+        .hero-status-pill {
             position: absolute;
-            bottom: 4px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 5;
-            background: rgba(5,8,20,0.92);
-            border: 1px solid rgba(34,197,94,0.4);
+            background: rgba(10,14,26,0.85);
+            border: 1px solid rgba(34,197,94,0.3);
             border-radius: 999px;
-            padding: 4px 12px;
-            font-size: 0.68rem;
-            font-weight: 600;
-            color: #22c55e;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4ade80;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             white-space: nowrap;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
-        .hero-status-dot {
-            width: 6px; height: 6px;
+        .status-dot-pulse {
+            width: 8px; height: 8px;
             border-radius: 50%;
             background: #22c55e;
-            animation: statusPing 1.8s ease-in-out infinite;
+            position: relative;
         }
-        @keyframes statusPing {
-            0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
-            50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
-        }
-
-        /* === Text side === */
-        .hero-text { flex: 1; max-width: 640px; }
-
-        .hero-greeting {
-            font-family: 'Fira Mono', monospace;
-            font-size: 0.75rem;
-            color: #06b6d4;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .hero-greeting::before, .hero-greeting::after {
+        .status-dot-pulse::after {
             content: '';
-            flex: 0 0 24px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #06b6d4);
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid #22c55e;
+            animation: pulseRing 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
-        .hero-greeting::after {
-            background: linear-gradient(90deg, #06b6d4, transparent);
+        @keyframes pulseRing {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
         }
 
-        .hero h1 {
-            font-size: clamp(2.6rem, 5.5vw, 4rem);
-            font-weight: 900;
-            line-height: 1.0;
-            letter-spacing: -2px;
-            color: #fff;
-            margin-bottom: 0.5rem;
+        /* Typography */
+        .hero-eyebrow {
+            font-family: 'Fira Mono', monospace;
+            font-size: 0.9rem;
+            color: #06b6d4;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
-        .hero h1 .name-grad {
-            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 60%, #06b6d4 100%);
-            background-size: 200% auto;
+        
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+        }
+        .hero-title .grad-text {
+            background: linear-gradient(to right, #06b6d4, #8b5cf6, #ec4899, #06b6d4);
+            background-size: 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: nameGrad 4s linear infinite;
+            animation: shimmerText 6s linear infinite;
         }
-        @keyframes nameGrad { to { background-position: 200% center; } }
+        @keyframes shimmerText { to { background-position: 300% center; } }
 
-        /* Role chips row */
-        .hero-chips {
+        .hero-desc {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            line-height: 1.8;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Premium Glass Chips */
+        .hero-skills {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 1.4rem;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 3rem;
         }
-        .hero-chip {
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            border: 1px solid;
-        }
-        .chip-cyan  { border-color: rgba(6,182,212,0.4);  color: #06b6d4;  background: rgba(6,182,212,0.07);  }
-        .chip-purple{ border-color: rgba(139,92,246,0.4); color: #a78bfa; background: rgba(139,92,246,0.07); }
-        .chip-green { border-color: rgba(34,197,94,0.4);  color: #4ade80; background: rgba(34,197,94,0.07);  }
-
-        .hero p {
-            font-size: 14.5px;
-            line-height: 1.75;
-            margin-bottom: 1.4rem;
-            color: #94a3b8;
-            border-left: 2px solid rgba(6,182,212,0.5);
-            padding-left: 16px;
-        }
-
-        /* Stats grid */
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-            margin-bottom: 1.6rem;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
+        .glass-chip {
+            padding: 8px 18px;
             border-radius: 12px;
-            overflow: hidden;
-        }
-        .hero-stat {
-            padding: 12px 8px;
-            text-align: center;
-            border-right: 1px solid rgba(255,255,255,0.06);
-        }
-        .hero-stat:last-child { border-right: none; }
-        .hero-stat-num {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #06b6d4;
-            line-height: 1;
-        }
-        .hero-stat-label {
-            font-size: 0.6rem;
-            color: #475569;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-
-        /* Social links */
-        .hero-social {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 1.4rem;
-            flex-wrap: wrap;
-        }
-        .hero-social a {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.09);
-            color: #64748b;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.25s ease;
-            background: rgba(255,255,255,0.02);
-        }
-        .hero-social a:hover {
-            border-color: #06b6d4;
-            color: #06b6d4;
-            background: rgba(6,182,212,0.06);
-            transform: translateY(-2px);
-        }
-
-        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-
-        @keyframes glow {
-            0%,100% { text-shadow: 0 0 8px rgba(6,182,212,0.5); }
-            50%      { text-shadow: 0 0 24px rgba(6,182,212,0.9), 0 0 48px rgba(6,182,212,0.3); }
-        }
-
-        /* ======= MOBILE HERO ======= */
-        @media (max-width: 768px) {
-            .hero { padding: 90px 0 40px; }
-            .hero-content {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                gap: 28px;
-            }
-            .hero-img-wrap { width: 200px; height: 200px; }
-            .hero-img-wrap::before { inset: -10px; }
-            .hero-img { width: 200px; height: 200px; }
-            .hero-orb-1 { width: 280px; height: 280px; top: -60px; left: -60px; }
-            .hero-orb-2 { width: 220px; height: 220px; }
-            .hero h1 { font-size: 2.4rem; letter-spacing: -1px; }
-            .hero-greeting { justify-content: center; }
-            .hero-chips { justify-content: center; }
-            .hero p { text-align: left; }
-            .hero-stats { grid-template-columns: repeat(2, 1fr); }
-            .hero-stat:nth-child(2) { border-right: none; }
-            .hero-stat:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.06); }
-            .hero-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.06); border-right: none; }
-            .hero-social { justify-content: center; }
-            .hero-btns { justify-content: center; }
-            .hero-status { font-size: 0.62rem; padding: 3px 10px; }
-        }
-
-        .hero-content {
-            display: flex;
-            align-items: center;
-            gap: 70px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.5s;
-        }
-
-        /* === Profile image with orbiting ring === */
-        .hero-img-wrap {
-            position: relative;
-            flex-shrink: 0;
-            width: 300px;
-            height: 300px;
-        }
-        .hero-img-ring {
-            position: absolute;
-            inset: -18px;
-            border-radius: 50%;
-            border: 1.5px dashed rgba(6,182,212,0.35);
-            animation: heroRingSpin 12s linear infinite;
-        }
-        .hero-img-ring2 {
-            position: absolute;
-            inset: -36px;
-            border-radius: 50%;
-            border: 1px dashed rgba(139,92,246,0.2);
-            animation: heroRingSpin 20s linear infinite reverse;
-        }
-        @keyframes heroRingSpin { to { transform: rotate(360deg); } }
-        .hero-img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #06b6d4;
-            box-shadow: 0 0 30px rgba(6,182,212,0.45), 0 0 80px rgba(6,182,212,0.12);
-            transition: all 0.5s ease;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(6,182,212,0.7), 0 0 100px rgba(6,182,212,0.2);
-        }
-        .hero-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Status badge on image */
-        .hero-status {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            z-index: 5;
-            background: rgba(10,14,26,0.9);
-            border: 1px solid rgba(6,182,212,0.4);
-            border-radius: 999px;
-            padding: 5px 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #06b6d4;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
-            backdrop-filter: blur(8px);
-        }
-        .hero-status-dot {
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            background: #22c55e;
-            animation: statusPing 1.8s ease-in-out infinite;
-        }
-        @keyframes statusPing {
-            0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
-            50% { opacity:0.8; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
-        }
-
-        .hero-text {
-            max-width: 660px;
-            flex: 1;
-        }
-
-        /* Greeting line */
-        .hero-greeting {
-            font-family: 'Fira Mono', monospace;
-            font-size: 0.82rem;
-            color: #06b6d4;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .hero-greeting::before {
-            content: '';
-            display: inline-block;
-            width: 28px; height: 1.5px;
-            background: #06b6d4;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.4rem, 5vw, 3.6rem);
-            font-weight: 900;
-            margin-bottom: 6px;
-            line-height: 1.05;
-            color: #ffffff;
-            letter-spacing: -1px;
-        }
-        .hero h1 span {
-            color: #06b6d4;
-            animation: glow 2.5s ease-in-out infinite;
-        }
-
-        /* Animated role tag */
-        .hero-role {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(6,182,212,0.08);
-            border: 1px solid rgba(6,182,212,0.22);
-            border-radius: 999px;
-            padding: 5px 16px;
-            margin-bottom: 1.4rem;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #94a3b8;
             letter-spacing: 0.5px;
-        }
-        .hero-role span { color: #06b6d4; font-weight: 700; }
-
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 8px rgba(6,182,212,0.5); }
-            50% { text-shadow: 0 0 20px rgba(6,182,212,0.85), 0 0 40px rgba(6,182,212,0.3); }
-        }
-
-        .hero p {
-            font-size: 15px;
-            line-height: 1.75;
-            margin-bottom: 1.8rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
             color: #cbd5e1;
-            background: rgba(255,255,255,0.04);
-            padding: 18px 22px;
-            border-radius: 12px;
-            border-left: 3px solid #06b6d4;
-            font-style: italic;
-            position: relative;
-        }
-        .hero p::before {
-            content: '\201C';
-            position: absolute;
-            top: -8px; left: 14px;
-            font-size: 3rem;
-            color: rgba(6,182,212,0.15);
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        /* Stats row */
-        .hero-stats {
+            backdrop-filter: blur(10px);
             display: flex;
-            gap: 1.8rem;
-            margin-bottom: 1.8rem;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
         }
-        .hero-stat {
-            text-align: center;
-        }
-        .hero-stat-num {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #06b6d4;
-            line-height: 1;
-        }
-        .hero-stat-label {
-            font-size: 0.68rem;
-            color: #64748b;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-        .hero-stat-divider {
-            width: 1px;
+        .glass-chip:hover {
             background: rgba(255,255,255,0.08);
-            align-self: stretch;
+            transform: translateY(-2px);
+            border-color: rgba(6,182,212,0.4);
+            color: #fff;
         }
+        .glass-chip i { color: #06b6d4; }
 
-        /* Social quick links */
-        .hero-social {
+        /* Action Buttons */
+        .hero-actions {
             display: flex;
-            gap: 10px;
-            margin-bottom: 1.6rem;
+            gap: 16px;
+            justify-content: center;
             flex-wrap: wrap;
+            width: 100%;
         }
-        .hero-social a {
+        
+        .btn-primary-glow {
+            padding: 16px 36px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: 8px;
+            gap: 10px;
+            box-shadow: 0 10px 30px -10px rgba(6,182,212,0.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255,255,255,0.1);
-            color: #94a3b8;
-            font-size: 0.78rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            background: rgba(255,255,255,0.03);
         }
-        .hero-social a:hover {
-            border-color: #06b6d4;
-            color: #06b6d4;
-            background: rgba(6,182,212,0.07);
-            transform: translateY(-2px);
+        .btn-primary-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px -10px rgba(6,182,212,0.8);
+        }
+
+        .btn-secondary-glass {
+            padding: 16px 36px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.03);
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary-glass:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Mobile View Fixes */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 15px 40px;
+            }
+            .hero-avatar-container {
+                width: 160px; height: 160px;
+            }
+            .hero-status-pill {
+                font-size: 0.65rem;
+                padding: 4px 12px;
+                bottom: -15px;
+            }
+            .hero-title {
+                font-size: clamp(2.4rem, 12vw, 3.5rem);
+            }
+            .hero-actions {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+            .btn-primary-glow, .btn-secondary-glass {
+                width: 100%;
+                justify-content: center;
+            }
+            .glass-chip { padding: 6px 12px; font-size: 0.75rem; }
         }
 
         .btn {
@@ -1729,19 +1492,6 @@ body.theme-alt5 .achievement-icon {
                 font-size: 32px;
             }
 
-            .hero p {
-                font-size: 14px;
-            }
-
-            .hero-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-img {
-                width: 180px;
-                height: 180px;
-            }
 
             .sidebar {
                 flex-direction: row;
@@ -2699,19 +2449,6 @@ window.addEventListener('DOMContentLoaded',function(){
             container.appendChild(p);
         }
 
-        // Single typewriter phrase — types once, cursor blinks
-        const phrase = 'git push origin dreams';
-        let ci = 0;
-        const subEl = document.getElementById('loader-sub');
-        function typeWriter() {
-            if (ci <= phrase.length) {
-                subEl.textContent = phrase.slice(0, ci);
-                ci++;
-                setTimeout(typeWriter, 80);
-            }
-        }
-        typeWriter();
-
         // Progress bar animation
         let pct = 0;
         const barEl = document.getElementById('loader-bar');
@@ -2724,17 +2461,49 @@ window.addEventListener('DOMContentLoaded',function(){
             pctEl.textContent = Math.round(pct) + '%';
         }, 120);
 
-        // Hide on window load
+        let windowLoaded = false;
+        let typingDone = false;
+        
+        function hideLoaderIfReady() {
+            if (windowLoaded && typingDone) {
+                clearInterval(barTimer);
+                barEl.style.width = '100%';
+                pctEl.textContent = '100%';
+                setTimeout(function() {
+                    const loader = document.getElementById('main-loader');
+                    loader.classList.add('hidden');
+                    setTimeout(function() { loader.style.display = 'none'; }, 950);
+                }, 400);
+            }
+        }
+
+        // Single typewriter phrase — types once, cursor blinks
+        const phrase = 'git push origin dreams';
+        let ci = 0;
+        const subEl = document.getElementById('loader-sub');
+        function typeWriter() {
+            if (ci <= phrase.length) {
+                subEl.textContent = phrase.slice(0, ci);
+                ci++;
+                setTimeout(typeWriter, 80);
+            } else {
+                typingDone = true;
+                hideLoaderIfReady();
+            }
+        }
+        typeWriter();
+
+        // Hide on window load (with minimum time from typing)
         window.addEventListener('load', function() {
-            clearInterval(barTimer);
-            barEl.style.width = '100%';
-            pctEl.textContent = '100%';
-            setTimeout(function() {
-                const loader = document.getElementById('main-loader');
-                loader.classList.add('hidden');
-                setTimeout(function() { loader.style.display = 'none'; }, 950);
-            }, 400);
+            windowLoaded = true;
+            hideLoaderIfReady();
         });
+        
+        // Failsafe in case load event never fires
+        setTimeout(function() {
+            windowLoaded = true;
+            hideLoaderIfReady();
+        }, 5000);
     })();
     </script>
 
@@ -2769,76 +2538,54 @@ window.addEventListener('DOMContentLoaded',function(){
     </header>
 
     <!-- Hero Section -->
+    <!-- Premium Hero Section -->
     <section class="hero" id="home">
-        <!-- Floating orb backgrounds -->
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
-        <div class="hero-orb hero-orb-3"></div>
+        <!-- Dynamic immersive background -->
+        <div class="hero-bg-fx"></div>
+        <div class="hero-orb hero-orb-cyan"></div>
+        <div class="hero-orb hero-orb-purple"></div>
 
-        <div class="container">
-            <div class="hero-content">
-
-                <!-- Profile -->
-                <div class="hero-img-wrap">
-                    <div class="hero-img">
-                        <img src="https://lh3.google.com/u/0/d/1BIrOKwwJ4rWCdv14SspsVqXhXgw1gF4c=w1366-h641-iv1?auditContext=forDisplay" alt="Akshitha Reddy">
-                    </div>
-                    <div class="hero-status">
-                        <div class="hero-status-dot"></div>
-                        Open to Opportunities
-                    </div>
+        <div class="hero-content">
+            <!-- Premium Avatar -->
+            <div class="hero-avatar-container">
+                <div class="hero-avatar-inner">
+                    <img src="https://lh3.google.com/u/0/d/1BIrOKwwJ4rWCdv14SspsVqXhXgw1gF4c=w1366-h641-iv1?auditContext=forDisplay" alt="Akshitha Reddy">
                 </div>
-
-                <!-- Text -->
-                <div class="hero-text">
-                    <div class="hero-greeting">Hello, World!</div>
-
-                    <h1>Akshitha <span class="name-grad">Reddy</span></h1>
-
-                    <!-- Role chips -->
-                    <div class="hero-chips">
-                        <span class="hero-chip chip-cyan"><i class="fas fa-code"></i> Final-Year IT Student</span>
-                        <span class="hero-chip chip-purple"><i class="fas fa-layer-group"></i> Full-Stack Developer</span>
-                        <span class="hero-chip chip-green"><i class="fas fa-book"></i> IEEE Author</span>
-                    </div>
-
-                    <!-- Bio -->
-                    <p>Engineering, at its core, is solving constraints through clean, performant systems — translating complex algorithmic logic into scalable, production-ready architectures and intelligent pipelines. Driven by IEEE research and national finals like Flipkart GRiD &amp; SIH.</p>
-
-                    <!-- Stats grid -->
-                    <div class="hero-stats">
-                        <div class="hero-stat">
-                            <div class="hero-stat-num">12+</div>
-                            <div class="hero-stat-label">Projects</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-num">1</div>
-                            <div class="hero-stat-label">IEEE Paper</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-num">Top 48</div>
-                            <div class="hero-stat-label">Flipkart GRiD</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-num">8.49</div>
-                            <div class="hero-stat-label">CGPA</div>
-                        </div>
-                    </div>
-
-                    <!-- Social -->
-                    <div class="hero-social">
-                        <a href="https://github.com/AkshithaReddy005" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                        <a href="https://www.linkedin.com/in/sudugu-akshitha-reddy-97b183259" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                        <a href="https://ieeexplore.ieee.org/document/11290369" target="_blank"><i class="fas fa-book-open"></i> IEEE Paper</a>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="hero-btns">
-                        <a href="https://drive.google.com/file/d/14gyzGLQeU2MbqN72D098gMaXBvLcz-NK/view?usp=sharing" class="btn" target="_blank">View Resume</a>
-                        <a href="https://drive.google.com/uc?export=download&id=14gyzGLQeU2MbqN72D098gMaXBvLcz-NK" class="btn" style="background:transparent;border:2px solid #06b6d4;color:#06b6d4;" download>Download</a>
-                    </div>
+                <div class="hero-status-pill">
+                    <div class="status-dot-pulse"></div>
+                    Open to Opportunities
                 </div>
+            </div>
 
+            <!-- Typography & Content -->
+            <div class="hero-eyebrow">Hello, World! I am</div>
+            <h1 class="hero-title">Akshitha <span class="grad-text">Reddy</span></h1>
+
+            <!-- Skills / Role Chips -->
+            <div class="hero-skills">
+                <div class="glass-chip"><i class="fas fa-layer-group"></i> Full-Stack Developer</div>
+                <div class="glass-chip"><i class="fas fa-brain"></i> Machine Learning pipelines</div>
+                <div class="glass-chip"><i class="fas fa-book"></i> IEEE Author</div>
+            </div>
+
+            <p class="hero-desc">
+                Engineering, at its core, is solving constraints through clean, performant systems. I translate complex algorithmic logic into scalable architectures and intelligent data pipelines. Driven by peer-reviewed IEEE research and national engineering finals like Flipkart GRiD.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="hero-actions">
+                <a href="https://drive.google.com/file/d/14gyzGLQeU2MbqN72D098gMaXBvLcz-NK/view?usp=sharing" class="btn-primary-glow" target="_blank">
+                    <i class="fas fa-file-alt"></i> View Resume
+                </a>
+                <a href="#projects" class="btn-secondary-glass">
+                    <i class="fas fa-code"></i> Explore Projects
+                </a>
+                <a href="https://github.com/AkshithaReddy005" target="_blank" class="btn-secondary-glass" style="padding: 16px;">
+                    <i class="fab fa-github" style="font-size: 1.2rem;"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/sudugu-akshitha-reddy-97b183259" target="_blank" class="btn-secondary-glass" style="padding: 16px;">
+                    <i class="fab fa-linkedin" style="font-size: 1.2rem;"></i>
+                </a>
             </div>
         </div>
     </section>
