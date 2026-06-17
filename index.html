@@ -2942,28 +2942,6 @@ window.addEventListener('DOMContentLoaded',function(){
                     </div>
                 </li>
             </ul>
-            
-            <!-- General Carousel moved to the end of Achievements -->
-            <div class="hackathon-carousel" style="margin: 40px auto 0 auto;" data-aos="fade-up">
-                <h3 style="text-align:center; margin-bottom:15px; color:#fff; font-size:1.2rem;">Flipkart GRiD Highlights</h3>
-                <div class="carousel-track">
-                    <div class="carousel-slide active"><img src="flipkart_grid_1.jpg" alt="Flipkart GRiD 1"></div>
-                    <div class="carousel-slide"><img src="flipkart_grid_2.png" alt="Flipkart GRiD 2"></div>
-                    <div class="carousel-slide"><img src="flipkart_grid_3.png" alt="Flipkart GRiD 3"></div>
-                    <div class="carousel-slide"><img src="flipkart_grid_4.png" alt="Flipkart GRiD 4"></div>
-                    <div class="carousel-slide"><img src="flipkart_grid_5.png" alt="Flipkart GRiD 5"></div>
-                </div>
-                <button class="carousel-btn prev-btn" style="top: 60%;"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-btn next-btn" style="top: 60%;"><i class="fas fa-chevron-right"></i></button>
-                <div class="carousel-nav">
-                    <div class="carousel-dot active" data-index="0"></div>
-                    <div class="carousel-dot" data-index="1"></div>
-                    <div class="carousel-dot" data-index="2"></div>
-                    <div class="carousel-dot" data-index="3"></div>
-                    <div class="carousel-dot" data-index="4"></div>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -3279,6 +3257,53 @@ window.addEventListener('DOMContentLoaded',function(){
       </div>
     </section>
 
+    <!-- Galleries Section -->
+    <section class="section" id="galleries" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">Event Highlights</h2>
+            
+            <!-- Flipkart Carousel -->
+            <div class="hackathon-carousel" style="max-width: 900px; margin: 0 auto 50px auto;" data-aos="fade-up">
+                <h3 style="text-align:center; margin-bottom:15px; color:#fff; font-size:1.5rem;">Flipkart GRiD National Finalist</h3>
+                <div class="carousel-track" style="height: 500px;">
+                    <div class="carousel-slide active"><img src="flipkart_grid_1.jpg" alt="Flipkart GRiD 1" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="flipkart_grid_2.png" alt="Flipkart GRiD 2" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="flipkart_grid_3.png" alt="Flipkart GRiD 3" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="flipkart_grid_4.png" alt="Flipkart GRiD 4" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="flipkart_grid_5.png" alt="Flipkart GRiD 5" style="object-fit: contain;"></div>
+                </div>
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                    <div class="carousel-dot" data-index="3"></div>
+                    <div class="carousel-dot" data-index="4"></div>
+                </div>
+            </div>
+
+            <!-- Other Hackathons Carousel -->
+            <div class="hackathon-carousel" style="max-width: 900px; margin: 0 auto 50px auto;" data-aos="fade-up">
+                <h3 style="text-align:center; margin-bottom:15px; color:#fff; font-size:1.5rem;">Other Hackathons & Events</h3>
+                <div class="carousel-track" style="height: 500px;">
+                    <div class="carousel-slide active"><img src="hackathon_1.png" alt="Hackathon Event 1" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="hackathon_2.png" alt="Hackathon Event 2" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="webathon.jpg" alt="Webathon Winner" style="object-fit: contain;"></div>
+                    <div class="carousel-slide"><img src="hackathon_3.png" alt="Hackathon Event 3" style="object-fit: contain;"></div>
+                </div>
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                    <div class="carousel-dot" data-index="3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="section" id="contact" data-aos="fade-up">
   <div class="contact-illustration" data-aos="zoom-in" data-aos-delay="0">
@@ -3587,12 +3612,16 @@ body, html, * {
       });
       // Carousel Logic
       document.addEventListener('DOMContentLoaded', () => {
-          const track = document.querySelector('.carousel-track');
-          if (track) {
+          const carousels = document.querySelectorAll('.hackathon-carousel');
+          
+          carousels.forEach(carousel => {
+              const track = carousel.querySelector('.carousel-track');
+              if (!track) return;
+              
               const slides = Array.from(track.children);
-              const nextBtn = document.querySelector('.next-btn');
-              const prevBtn = document.querySelector('.prev-btn');
-              const dotsNav = document.querySelector('.carousel-nav');
+              const nextBtn = carousel.querySelector('.next-btn');
+              const prevBtn = carousel.querySelector('.prev-btn');
+              const dotsNav = carousel.querySelector('.carousel-nav');
               const dots = Array.from(dotsNav.children);
 
               let currentSlideIndex = 0;
@@ -3602,27 +3631,48 @@ body, html, * {
                   dots.forEach(dot => dot.classList.remove('active'));
                   
                   slides[index].classList.add('active');
-                  dots[index].classList.add('active');
+                  if (dots[index]) dots[index].classList.add('active');
               };
 
-              nextBtn.addEventListener('click', () => {
+              if (nextBtn) {
+                  nextBtn.addEventListener('click', () => {
+                      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                      updateCarousel(currentSlideIndex);
+                  });
+              }
+
+              if (prevBtn) {
+                  prevBtn.addEventListener('click', () => {
+                      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                      updateCarousel(currentSlideIndex);
+                  });
+              }
+
+              if (dotsNav) {
+                  dotsNav.addEventListener('click', e => {
+                      const targetDot = e.target.closest('.carousel-dot');
+                      if (!targetDot) return;
+                      
+                      currentSlideIndex = dots.findIndex(dot => dot === targetDot);
+                      updateCarousel(currentSlideIndex);
+                  });
+              }
+
+              // Auto Slide Logic
+              let carouselInterval = setInterval(() => {
                   currentSlideIndex = (currentSlideIndex + 1) % slides.length;
                   updateCarousel(currentSlideIndex);
-              });
+              }, 3000);
 
-              prevBtn.addEventListener('click', () => {
-                  currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-                  updateCarousel(currentSlideIndex);
+              // Pause auto-slide on hover
+              track.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+              track.addEventListener('mouseleave', () => {
+                  carouselInterval = setInterval(() => {
+                      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                      updateCarousel(currentSlideIndex);
+                  }, 3000);
               });
-
-              dotsNav.addEventListener('click', e => {
-                  const targetDot = e.target.closest('.carousel-dot');
-                  if (!targetDot) return;
-                  
-                  currentSlideIndex = dots.findIndex(dot => dot === targetDot);
-                  updateCarousel(currentSlideIndex);
-              });
-          }
+          });
       });
     </script>
 </body>
