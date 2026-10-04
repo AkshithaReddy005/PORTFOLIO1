@@ -32,195 +32,179 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Loading Spinner with Enhanced Animation */
-        /* ===== CINEMATIC LOADER ===== */
-        .loader {
+        /* ===== EXECUTIVE PROFESSIONAL GLASS PRELOADER ===== */
+        #main-loader {
             position: fixed;
             inset: 0;
-            background: #050811;
+            background: #060913;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             overflow: hidden;
-            transition: opacity 0.9s ease, visibility 0.9s ease;
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
         }
-        .loader.hidden {
+        #main-loader.hidden {
             opacity: 0;
-            visibility: hidden;
+            transform: scale(1.04);
             pointer-events: none;
         }
 
-        /* Grid lines */
-        .loader-grid {
+        /* Soft Ambient Glow Flares */
+        .exec-glow-flare1 {
             position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(6,182,212,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6,182,212,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridPan 8s linear infinite;
-        }
-        @keyframes gridPan {
-            0%   { transform: translate(0,0); }
-            100% { transform: translate(60px,60px); }
-        }
-
-        /* Floating particles */
-        .loader-particles { position: absolute; inset: 0; pointer-events: none; }
-        .lp {
-            position: absolute;
+            width: 480px; height: 480px;
             border-radius: 50%;
-            background: radial-gradient(circle, #06b6d4, transparent);
-            opacity: 0;
-            animation: lpFloat linear infinite;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            top: 20%; left: 25%;
+            filter: blur(100px);
+            pointer-events: none;
         }
-        @keyframes lpFloat {
-            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-            10%  { opacity: 0.6; }
-            90%  { opacity: 0.3; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-
-        /* Corner accents */
-        .loader-corner {
+        .exec-glow-flare2 {
             position: absolute;
-            width: 48px; height: 48px;
-            border-color: #06b6d4;
-            border-style: solid;
-            opacity: 0.5;
-            animation: cornerPulse 2s ease-in-out infinite;
-        }
-        @keyframes cornerPulse { 0%,100%{opacity:0.3;} 50%{opacity:0.9;} }
-        .lc-tl { top:24px; left:24px;  border-width:2px 0 0 2px; }
-        .lc-tr { top:24px; right:24px; border-width:2px 2px 0 0; }
-        .lc-bl { bottom:24px; left:24px;  border-width:0 0 2px 2px; }
-        .lc-br { bottom:24px; right:24px; border-width:0 2px 2px 0; }
-
-        /* Orb glow */
-        .loader-orb {
-            width: 140px; height: 140px;
+            width: 450px; height: 450px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #06b6d4 0%, #0e7490 40%, #050811 70%);
-            box-shadow: 0 0 60px #06b6d488, 0 0 120px #06b6d422;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.14) 0%, transparent 70%);
+            bottom: 20%; right: 25%;
+            filter: blur(100px);
+            pointer-events: none;
+        }
+
+        /* Executive Glass Card */
+        .exec-loader-card {
+            background: rgba(10, 15, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 46px 54px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(28px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 45px rgba(6, 182, 212, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            max-width: 440px;
+            width: 90vw;
             position: relative;
-            animation: orbBreath 3s ease-in-out infinite;
-            margin-bottom: 2rem;
-            flex-shrink: 0;
+            z-index: 2;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
         }
-        @keyframes orbBreath {
-            0%,100% { box-shadow: 0 0 60px #06b6d488, 0 0 120px #06b6d422; transform: scale(1); }
-            50%     { box-shadow: 0 0 90px #06b6d4bb, 0 0 180px #06b6d444; transform: scale(1.06); }
+        .exec-loader-card:hover {
+            border-color: rgba(6, 182, 212, 0.35);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.8), 0 0 55px rgba(6, 182, 212, 0.25);
         }
-        .loader-orb::before {
-            content: '';
-            position: absolute;
-            inset: 12px;
+
+        /* Monogram Badge */
+        .exec-mono-badge {
+            width: 78px;
+            height: 78px;
             border-radius: 50%;
-            border: 1.5px solid rgba(255,255,255,0.15);
-            animation: orbRing 4s linear infinite;
-        }
-        .loader-orb::after {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            border-radius: 50%;
-            border: 1px dashed rgba(6,182,212,0.25);
-            animation: orbRing 8s linear infinite reverse;
-        }
-        @keyframes orbRing { to { transform: rotate(360deg); } }
-        .loader-orb-icon {
-            position: absolute;
-            inset: 0;
+            background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(139,92,246,0.2));
+            border: 1.5px solid rgba(6,182,212,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.4rem;
-        }
-
-        /* Name */
-        .loader-name {
-            font-family: 'Outfit', 'Inter', sans-serif;
-            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-family: 'Fira Code', monospace;
+            font-size: 1.35rem;
             font-weight: 800;
-            letter-spacing: 2px;
-            color: #fff;
+            color: #06b6d4;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(6,182,212,0.3);
             position: relative;
-            margin-bottom: 0.3rem;
+            transition: all 0.3s ease;
         }
-        .loader-name span { color: #06b6d4; }
-        .loader-name::before {
-            content: attr(data-text);
+        .exec-mono-badge::after {
+            content: '';
             position: absolute;
-            left: 0; top: 0;
-            color: #06b6d4;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-            animation: glitch1 3s infinite;
-            opacity: 0.5;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(6,182,212,0.4);
+            animation: execMonoSpin 10s linear infinite;
         }
-        .loader-name::after {
-            content: attr(data-text);
-            position: absolute;
-            left: 0; top: 0;
-            color: #f0abfc;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-            animation: glitch2 3s infinite;
-            opacity: 0.4;
+        @keyframes execMonoSpin { 100% { transform: rotate(360deg); } }
+
+        /* Typography */
+        .exec-title {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
         }
-        @keyframes glitch1 {
-            0%,90%,100% { transform: translate(0); }
-            92% { transform: translate(-3px, 1px); }
-            94% { transform: translate(3px,-1px); }
-            96% { transform: translate(-2px, 2px); }
-        }
-        @keyframes glitch2 {
-            0%,88%,100% { transform: translate(0); }
-            90% { transform: translate(3px, 2px); }
-            92% { transform: translate(-3px,-1px); }
-            94% { transform: translate(2px,-2px); }
+        .exec-title span {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Subtitle typewriter */
-        .loader-sub {
-            font-family: 'Fira Mono', monospace;
-            font-size: 0.8rem;
-            color: #06b6d4;
-            letter-spacing: 1px;
+        .exec-sub {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.76rem;
+            color: #94a3b8;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            margin-bottom: 2rem;
-            min-height: 1.6rem;
-            max-width: 90vw;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: center;
+            margin-bottom: 24px;
         }
 
-        /* Progress bar */
-        .loader-bar-wrap {
-            width: clamp(200px, 40vw, 340px);
-            height: 3px;
-            background: rgba(6,182,212,0.12);
+        /* Progress Bar Box */
+        .exec-progress-box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .exec-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 99px;
             overflow: hidden;
             position: relative;
-            margin-bottom: 0.7rem;
         }
-        .loader-bar {
+        .exec-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #06b6d4);
-            background-size: 200% 100%;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
             border-radius: 99px;
+            box-shadow: 0 0 15px #06b6d4;
             transition: width 0.15s ease;
-            animation: barShimmer 2s linear infinite;
         }
-        @keyframes barShimmer { 0%{background-position:0% 0;} 100%{background-position:200% 0;} }
-        .loader-pct {
-            font-family: 'Fira Mono', monospace;
-            font-size: 0.72rem;
-            color: rgba(6,182,212,0.6);
-            letter-spacing: 1px;
+
+        .exec-readout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+        }
+        .exec-status-txt { color: #06b6d4; }
+        .exec-pct-txt { color: #ffffff; font-weight: 700; }
+
+        /* Launch Button */
+        .exec-launch-btn {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 12px 28px;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .exec-launch-btn:hover {
+            background: linear-gradient(135deg, #0891b2, #2563eb);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 35px -5px rgba(6, 182, 212, 0.7);
         }
 
         /* Video Background with Subtle Parallax */
@@ -513,67 +497,146 @@
         }
         @keyframes heroReveal { to { opacity: 1; transform: translateY(0); } }
 
-        /* === Premium Profile Container === */
+        /* === Premium Profile Container Overhaul === */
         .hero-avatar-container {
             position: relative;
-            margin-bottom: 2rem;
-            width: 220px;
-            height: 220px;
+            margin-bottom: 2.2rem;
+            width: 230px;
+            height: 230px;
             border-radius: 50%;
-            padding: 8px;
-            background: linear-gradient(135deg, rgba(6,182,212,0.5), rgba(139,92,246,0.5));
-            box-shadow: 0 0 40px rgba(6,182,212,0.2), inset 0 0 20px rgba(255,255,255,0.1);
+            padding: 6px;
+            background: linear-gradient(135deg, rgba(6,182,212,0.6), rgba(139,92,246,0.6), rgba(236,72,153,0.6));
+            box-shadow: 0 0 50px rgba(6,182,212,0.35), inset 0 0 25px rgba(255,255,255,0.15);
             animation: floatAvatar 6s ease-in-out infinite;
         }
         @keyframes floatAvatar {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
+
+        /* Animated conic ring */
+        .hero-avatar-container::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #06b6d4, #8b5cf6, #ec4899, #06b6d4);
+            z-index: 0;
+            animation: spinRing 8s linear infinite;
+            filter: blur(8px);
+            opacity: 0.7;
+        }
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
         .hero-avatar-inner {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             overflow: hidden;
             background: #050814;
-            border: 4px solid #050814;
+            border: 4px solid #070c1e;
             position: relative;
             z-index: 2;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
         }
         .hero-avatar-inner img {
             width: 100%; height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            object-position: center 20%;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
         }
         .hero-avatar-container:hover .hero-avatar-inner img {
-            transform: scale(1.1);
+            transform: scale(1.08);
+            filter: brightness(1.05);
         }
+
+        /* Floating Tech Badges */
+        .hero-float-badge {
+            position: absolute;
+            z-index: 6;
+            background: rgba(10, 14, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(14px);
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .hero-float-badge:hover {
+            border-color: rgba(6, 182, 212, 0.6);
+            transform: scale(1.08);
+        }
+        .hero-float-badge i {
+            font-size: 0.9rem;
+        }
+        .badge-top-left {
+            top: 20px;
+            left: -45px;
+            animation: floatBadgeTL 5s ease-in-out infinite;
+        }
+        .badge-top-left i { color: #61dafb; }
+
+        .badge-top-right {
+            top: 25px;
+            right: -45px;
+            animation: floatBadgeTR 5s ease-in-out infinite 0.7s;
+        }
+        .badge-top-right i { color: #a78bfa; }
+
+        .badge-bottom-left {
+            bottom: 30px;
+            left: -40px;
+            animation: floatBadgeBL 5.5s ease-in-out infinite 1.2s;
+        }
+        .badge-bottom-left i { color: #38bdf8; }
+
+        .badge-bottom-right {
+            bottom: 35px;
+            right: -40px;
+            animation: floatBadgeBR 5.5s ease-in-out infinite 1.8s;
+        }
+        .badge-bottom-right i { color: #f472b6; }
+
+        @keyframes floatBadgeTL { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-6px, -8px); } }
+        @keyframes floatBadgeTR { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(6px, -8px); } }
+        @keyframes floatBadgeBL { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-6px, 8px); } }
+        @keyframes floatBadgeBR { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(6px, 8px); } }
 
         /* Dynamic Status Pill */
         .hero-status-pill {
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 5;
-            background: rgba(10,14,26,0.85);
-            border: 1px solid rgba(34,197,94,0.3);
+            background: rgba(8, 12, 22, 0.9);
+            border: 1px solid rgba(34,197,94,0.4);
             border-radius: 999px;
-            padding: 6px 16px;
-            font-size: 0.75rem;
+            padding: 7px 18px;
+            font-size: 0.78rem;
             font-weight: 700;
             color: #4ade80;
             display: flex;
             align-items: center;
             gap: 8px;
             white-space: nowrap;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 15px rgba(34,197,94,0.15);
         }
         .status-dot-pulse {
             width: 8px; height: 8px;
             border-radius: 50%;
             background: #22c55e;
             position: relative;
+            box-shadow: 0 0 8px #22c55e;
         }
         .status-dot-pulse::after {
             content: '';
@@ -585,33 +648,48 @@
         }
         @keyframes pulseRing {
             0% { transform: scale(0.5); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
+            100% { transform: scale(2.2); opacity: 0; }
         }
 
         /* Typography */
         .hero-eyebrow {
-            font-family: 'Fira Mono', monospace;
-            font-size: 0.9rem;
+            font-family: 'Fira Code', 'Fira Mono', monospace;
+            font-size: 0.85rem;
             color: #06b6d4;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            background: rgba(6, 182, 212, 0.06);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 6px 18px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+        }
+        .hero-eyebrow .eyebrow-code {
+            color: #8b5cf6;
+            font-weight: 700;
         }
         
         .hero-title {
-            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-size: clamp(3.2rem, 8vw, 5.8rem);
             font-weight: 900;
             line-height: 1.1;
-            letter-spacing: -2px;
+            letter-spacing: -2.5px;
             color: #ffffff;
             margin-bottom: 1.2rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .hero-title .grad-text {
-            background: linear-gradient(to right, #06b6d4, #8b5cf6, #ec4899, #06b6d4);
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 30%, #8b5cf6 65%, #ec4899 100%);
             background-size: 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmerText 6s linear infinite;
+            animation: shimmerText 5s linear infinite;
+            filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.35));
         }
         @keyframes shimmerText { to { background-position: 300% center; } }
 
@@ -619,8 +697,16 @@
             font-size: clamp(1rem, 2vw, 1.15rem);
             line-height: 1.8;
             color: #94a3b8;
-            max-width: 700px;
+            max-width: 720px;
             margin: 0 auto 2.5rem;
+        }
+        .hero-desc .highlight-text {
+            color: #e2e8f0;
+            font-weight: 600;
+            background: linear-gradient(120deg, rgba(6,182,212,0.15), rgba(139,92,246,0.15));
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-bottom: 1.5px solid rgba(6,182,212,0.4);
         }
 
         /* Premium Glass Chips */
@@ -629,30 +715,32 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 3rem;
+            margin-bottom: 2.8rem;
         }
         .glass-chip {
-            padding: 8px 18px;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            padding: 9px 20px;
+            border-radius: 14px;
+            font-size: 0.88rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            background: rgba(255,255,255,0.03);
+            letter-spacing: 0.4px;
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255,255,255,0.08);
             color: #cbd5e1;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
+            gap: 9px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .glass-chip:hover {
-            background: rgba(255,255,255,0.08);
-            transform: translateY(-2px);
-            border-color: rgba(6,182,212,0.4);
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-3px);
+            border-color: rgba(6,182,212,0.5);
             color: #fff;
+            box-shadow: 0 8px 25px rgba(6,182,212,0.2);
         }
-        .glass-chip i { color: #06b6d4; }
+        .glass-chip i { color: #06b6d4; font-size: 0.95rem; }
 
         /* Action Buttons */
         .hero-actions {
@@ -666,7 +754,8 @@
         .btn-primary-glow {
             padding: 16px 36px;
             border-radius: 14px;
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            background: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
+            background-size: 200% auto;
             color: white;
             font-weight: 700;
             font-size: 1rem;
@@ -674,19 +763,23 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 10px 30px -10px rgba(6,182,212,0.6);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px -5px rgba(6,182,212,0.5), 0 0 20px rgba(59,130,246,0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
         }
         .btn-primary-glow:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px -10px rgba(6,182,212,0.8);
+            transform: translateY(-4px) scale(1.02);
+            background-position: right center;
+            box-shadow: 0 18px 45px -5px rgba(6,182,212,0.7), 0 0 30px rgba(139,92,246,0.5);
+            border-color: rgba(255,255,255,0.4);
         }
 
         .btn-secondary-glass {
             padding: 16px 36px;
             border-radius: 14px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(15, 23, 42, 0.6);
             color: #e2e8f0;
             font-weight: 600;
             font-size: 1rem;
@@ -694,15 +787,63 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(14px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .btn-secondary-glass:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.2);
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(6,182,212,0.4);
             color: #fff;
             transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(6,182,212,0.2);
+        }
+
+        /* Hero Stats Counter Bar */
+        .hero-stats-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 2.8rem;
+            padding: 16px 32px;
+            background: rgba(10, 15, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+        }
+        .hero-stat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+        }
+        .hero-stat-card .stat-num {
+            font-size: 1.45rem;
+            font-weight: 900;
+            font-family: 'Fira Code', monospace;
+            letter-spacing: -0.5px;
+        }
+        .hero-stat-card .stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        .stat-divider {
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+        @media (max-width: 640px) {
+            .stat-divider { display: none; }
+            .hero-stats-grid { gap: 16px; padding: 14px; }
+            .badge-top-left, .badge-top-right, .badge-bottom-left, .badge-bottom-right { display: none; }
         }
 
         /* Mobile View Fixes */
@@ -2345,129 +2486,7 @@ footer {
 </style>
 </head>
 <body>
-    <!-- Retro Entry Overlay Loader -->
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-#retro-entry-overlay {
-  position:fixed;z-index:5000;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:#181c22;
-  transition:opacity 0.7s;
-}
-.retro-entry-box {
-  background:#23282e;
-  border:3px solid #06b6d4;
-  border-radius:14px;
-  box-shadow:0 0 28px #06b6d4cc,0 0 6px #06b6d4;
-  padding:22px 14px 18px 14px;
-  text-align:center;
-  min-width:220px;
-  max-width:94vw;
-  font-family:'VT323',monospace;
-}
-.retro-entry-heading {
-  font-size:1.6rem;
-  color:#06b6d4;
-  margin-bottom:7px;
-  letter-spacing:1.2px;
-  font-family:'VT323',monospace;
-  text-shadow:0 0 8px #06b6d4aa,0 1px 0 #fff;
-}
-#retro-entry-typed {
-  font-size:0.97rem;
-  color:#e5e7eb;
-  margin-bottom:16px;
-  min-height:28px;
-  display:block;
-  font-family:'Fira Mono',monospace;
-  letter-spacing:0.6px;
-  text-shadow:0 0 6px #06b6d444;
-}
-.retro-entry-btn {
-  background:#181c22;
-  color:#06b6d4;
-  border:2px solid #06b6d4;
-  border-radius:7px;
-  font-family:'VT323',monospace;
-  font-size:1.01rem;
-  padding:7px 22px;
-  margin-bottom:10px;
-  cursor:pointer;
-  box-shadow:0 0 10px #06b6d4bb;
-  transition:background 0.2s,color 0.2s,box-shadow 0.2s,transform 0.2s;
-  text-shadow:0 0 8px #06b6d4aa;
-  outline:none;
-  position:relative;
-}
-.retro-entry-btn:focus,.retro-entry-btn:hover {
-  background:#06b6d4;
-  color:#181c22;
-  box-shadow:0 0 32px #06b6d4cc,0 0 12px #fff;
-  transform:scale(1.04);
-}
-.retro-entry-loader {
-  margin:0 auto 8px auto;
-  display:block;
-}
-@media(max-width:500px){
-  .retro-entry-box{padding:20px 6vw;min-width:0;}
-  .retro-entry-heading{font-size:2.1rem;}
-  #retro-entry-typed{font-size:1rem;}
-  .retro-entry-btn{font-size:1rem;padding:10px 18px;}
-}
-</style>
-<div id="retro-entry-overlay" tabindex="-1">
-  <div class="retro-entry-box">
-    <div class="retro-entry-heading">Enter Akshitha's Portfolio</div>
-    <span id="retro-entry-typed"></span>
-    <button id="retro-entry-btn" class="retro-entry-btn">Enter Portfolio</button>
-    <div class="retro-entry-loader">
-      <svg width="80" height="18" viewBox="0 0 80 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="4" width="12" height="12" rx="3" fill="#06b6d4">
-          <animate attributeName="y" values="4;0;4" dur="0.8s" repeatCount="indefinite"/>
-        </rect>
-        <rect x="22" y="4" width="12" height="12" rx="3" fill="#06b6d4">
-          <animate attributeName="y" values="4;12;4" begin="0.2s" dur="0.8s" repeatCount="indefinite"/>
-        </rect>
-        <rect x="42" y="4" width="12" height="12" rx="3" fill="#06b6d4">
-          <animate attributeName="y" values="4;0;4" begin="0.4s" dur="0.8s" repeatCount="indefinite"/>
-        </rect>
-        <rect x="62" y="4" width="12" height="12" rx="3" fill="#06b6d4">
-          <animate attributeName="y" values="4;12;4" begin="0.6s" dur="0.8s" repeatCount="indefinite"/>
-        </rect>
-      </svg>
-    </div>
-    <div style="margin-top:8px;color:#b7c6d9;font-size:1rem;font-family:'Fira Mono',monospace;">or press <b>Enter</b></div>
-  </div>
-</div>
-<script>
-// Retro entry overlay logic with typing effect
-window.addEventListener('DOMContentLoaded',function(){
-  var entry=document.getElementById('retro-entry-overlay');
-  var btn=document.getElementById('retro-entry-btn');
-  var typed=document.getElementById('retro-entry-typed');
-  var msg="Welcome! Explore my journey, projects, and skills as a passionate developer and creative problem solver.";
-  var i=0;
-  function typeText(){
-    if(i<=msg.length){
-      typed.textContent=msg.substring(0,i);
-      i++;
-      setTimeout(typeText, 22);
-    }
-  }
-  typeText();
-  function closeEntry(){
-    entry.style.opacity='0';
-    setTimeout(function(){entry.style.display='none';},700);
-    document.body.removeAttribute('aria-hidden');
-  }
-  btn.addEventListener('click',closeEntry);
-  window.addEventListener('keydown',function(e){
-    if(entry.style.display!=='none'&&(e.key==='Enter'||e.key===' '))closeEntry();
-  });
-  document.body.setAttribute('aria-hidden','true');
-  btn.focus();
-});
-</script>
+
 
 
     <script>
@@ -2523,115 +2542,104 @@ window.addEventListener('DOMContentLoaded',function(){
       });
     });
     </script>
-    <!-- Loading Spinner -->
-    <!-- ===== CINEMATIC LOADER ===== -->
-    <div class="loader" id="main-loader" aria-label="Loading portfolio">
 
-        <!-- Animated grid background -->
-        <div class="loader-grid"></div>
+    <!-- Executive Professional Glass Preloader -->
+    <div id="main-loader" aria-label="Loading portfolio">
+        <div class="exec-glow-flare1"></div>
+        <div class="exec-glow-flare2"></div>
 
-        <!-- Corner accent brackets -->
-        <div class="loader-corner lc-tl"></div>
-        <div class="loader-corner lc-tr"></div>
-        <div class="loader-corner lc-bl"></div>
-        <div class="loader-corner lc-br"></div>
+        <div class="exec-loader-card" id="exec-loader-card">
+            <div class="exec-mono-badge">&lt;AR /&gt;</div>
+            <h2 class="exec-title">Akshitha <span>Reddy</span></h2>
+            <div class="exec-sub">Full-Stack &amp; AI Architect</div>
 
-        <!-- Floating particles (generated by JS below) -->
-        <div class="loader-particles" id="loader-particles"></div>
+            <div class="exec-progress-box">
+                <div class="exec-track">
+                    <div class="exec-fill" id="exec-loader-fill"></div>
+                </div>
+                <div class="exec-readout">
+                    <span class="exec-status-txt" id="exec-status-txt">INITIALIZING SYSTEM...</span>
+                    <span class="exec-pct-txt" id="exec-pct-txt">0%</span>
+                </div>
+            </div>
 
-        <!-- Orb icon -->
-        <div class="loader-orb">
-            <span class="loader-orb-icon">🧠</span>
+            <button class="exec-launch-btn" id="exec-launch-btn">
+                Explore Portfolio <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
-
-        <!-- Name with glitch effect -->
-        <div class="loader-name" data-text="Akshitha Reddy">Akshitha <span>Reddy</span></div>
-
-        <!-- Typewriter subtitle -->
-        <div class="loader-sub" id="loader-sub"></div>
-
-        <!-- Progress bar -->
-        <div class="loader-bar-wrap">
-            <div class="loader-bar" id="loader-bar"></div>
-        </div>
-        <div class="loader-pct" id="loader-pct">0%</div>
-
     </div>
 
     <script>
-    // ===== CINEMATIC LOADER LOGIC =====
     (function() {
-        // Spawn particles
-        const container = document.getElementById('loader-particles');
-        for (let i = 0; i < 22; i++) {
-            const p = document.createElement('div');
-            p.className = 'lp';
-            const size = Math.random() * 10 + 4;
-            p.style.cssText = [
-                `width:${size}px`, `height:${size}px`,
-                `left:${Math.random()*100}%`,
-                `animation-duration:${Math.random()*6+5}s`,
-                `animation-delay:${Math.random()*6}s`,
-                `opacity:0`
-            ].join(';');
-            container.appendChild(p);
-        }
-
-        // Progress bar animation
         let pct = 0;
-        const barEl = document.getElementById('loader-bar');
-        const pctEl = document.getElementById('loader-pct');
-        const barTimer = setInterval(function() {
-            // Fast at first, slow near 100
-            const step = pct < 70 ? Math.random()*6+2 : Math.random()*1.5+0.3;
-            pct = Math.min(pct + step, 98);
-            barEl.style.width = pct + '%';
-            pctEl.textContent = Math.round(pct) + '%';
-        }, 120);
+        const fill = document.getElementById('exec-loader-fill');
+        const pctTxt = document.getElementById('exec-pct-txt');
+        const statusTxt = document.getElementById('exec-status-txt');
+        const launchBtn = document.getElementById('exec-launch-btn');
+        const loader = document.getElementById('main-loader');
+        const card = document.getElementById('exec-loader-card');
 
-        let windowLoaded = false;
-        let typingDone = false;
-        
-        function hideLoaderIfReady() {
-            if (windowLoaded && typingDone) {
-                clearInterval(barTimer);
-                barEl.style.width = '100%';
-                pctEl.textContent = '100%';
-                setTimeout(function() {
-                    const loader = document.getElementById('main-loader');
-                    loader.classList.add('hidden');
-                    setTimeout(function() { loader.style.display = 'none'; }, 950);
-                }, 400);
+        // Smooth Parallax Card Tilt
+        if (card) {
+            window.addEventListener('mousemove', function(e) {
+                const cx = window.innerWidth / 2;
+                const cy = window.innerHeight / 2;
+                const dx = (e.clientX - cx) / cx;
+                const dy = (e.clientY - cy) / cy;
+                card.style.transform = 'perspective(1000px) rotateY(' + (dx * 10) + 'deg) rotateX(' + (-dy * 10) + 'deg)';
+            });
+        }
+
+        const phrases = [
+            'INITIALIZING KERNEL...',
+            'LOADING ARCHITECTURES...',
+            'OPTIMIZING AI PIPELINES...',
+            'SYSTEM READY'
+        ];
+
+        let readyToLaunch = false;
+
+        const timer = setInterval(function() {
+            pct = Math.min(pct + (pct < 70 ? 14 : 7), 100);
+            if (fill) fill.style.width = pct + '%';
+            if (pctTxt) pctTxt.textContent = Math.round(pct) + '%';
+
+            if (statusTxt) {
+                if (pct < 35) statusTxt.textContent = phrases[0];
+                else if (pct < 70) statusTxt.textContent = phrases[1];
+                else if (pct < 100) statusTxt.textContent = phrases[2];
+                else statusTxt.textContent = phrases[3];
+            }
+
+            if (pct >= 100 && !readyToLaunch) {
+                readyToLaunch = true;
+                clearInterval(timer);
+                if (launchBtn) {
+                    launchBtn.style.transform = 'scale(1.05)';
+                    launchBtn.style.boxShadow = '0 12px 35px rgba(6, 182, 212, 0.7)';
+                }
+            }
+        }, 50);
+
+        function dismissLoader() {
+            clearInterval(timer);
+            if (fill) fill.style.width = '100%';
+            if (pctTxt) pctTxt.textContent = '100%';
+            if (statusTxt) statusTxt.textContent = phrases[3];
+
+            if (loader) {
+                loader.style.opacity = '0';
+                loader.style.transform = 'scale(1.04)';
+                setTimeout(function() { loader.style.display = 'none'; }, 700);
             }
         }
 
-        // Single typewriter phrase — types once, cursor blinks
-        const phrase = 'git push origin dreams';
-        let ci = 0;
-        const subEl = document.getElementById('loader-sub');
-        function typeWriter() {
-            if (ci <= phrase.length) {
-                subEl.textContent = phrase.slice(0, ci);
-                ci++;
-                setTimeout(typeWriter, 80);
-            } else {
-                typingDone = true;
-                hideLoaderIfReady();
+        if (launchBtn) launchBtn.addEventListener('click', dismissLoader);
+        window.addEventListener('keydown', function(e) {
+            if ((e.code === 'Space' || e.code === 'Enter') && loader.style.display !== 'none') {
+                dismissLoader();
             }
-        }
-        typeWriter();
-
-        // Hide on window load (with minimum time from typing)
-        window.addEventListener('load', function() {
-            windowLoaded = true;
-            hideLoaderIfReady();
         });
-        
-        // Failsafe in case load event never fires
-        setTimeout(function() {
-            windowLoaded = true;
-            hideLoaderIfReady();
-        }, 5000);
     })();
     </script>
 
@@ -2679,6 +2687,18 @@ window.addEventListener('DOMContentLoaded',function(){
                 <div class="hero-avatar-inner">
                     <img src="akshitha_reddy_profile_github.png" alt="Akshitha Reddy">
                 </div>
+                <div class="hero-float-badge badge-top-left">
+                    <i class="fab fa-react"></i> Full-Stack
+                </div>
+                <div class="hero-float-badge badge-top-right">
+                    <i class="fas fa-brain"></i> AI & ML
+                </div>
+                <div class="hero-float-badge badge-bottom-left">
+                    <i class="fas fa-file-code"></i> IEEE Author
+                </div>
+                <div class="hero-float-badge badge-bottom-right">
+                    <i class="fas fa-cubes"></i> MERN & C++
+                </div>
                 <div class="hero-status-pill">
                     <div class="status-dot-pulse"></div>
                     Open to Opportunities
@@ -2686,18 +2706,23 @@ window.addEventListener('DOMContentLoaded',function(){
             </div>
 
             <!-- Typography & Content -->
-            <div class="hero-eyebrow">Hello, World! I am</div>
+            <div class="hero-eyebrow">
+                <span class="eyebrow-code">&lt;</span>
+                <span>Hello, World! I am</span>
+                <span class="eyebrow-code">/&gt;</span>
+            </div>
             <h1 class="hero-title">Akshitha <span class="grad-text">Reddy</span></h1>
 
             <!-- Skills / Role Chips -->
             <div class="hero-skills">
                 <div class="glass-chip"><i class="fas fa-layer-group"></i> Full-Stack Developer</div>
-                <div class="glass-chip"><i class="fas fa-brain"></i> Machine Learning pipelines</div>
-                <div class="glass-chip"><i class="fas fa-book"></i> IEEE Author</div>
+                <div class="glass-chip"><i class="fas fa-brain"></i> Machine Learning Pipelines</div>
+                <div class="glass-chip"><i class="fas fa-award"></i> IEEE Published Author</div>
+                <div class="glass-chip"><i class="fas fa-trophy"></i> National Hackathon Finalist</div>
             </div>
 
             <p class="hero-desc">
-                Engineering, at its core, is solving constraints through clean, performant systems. I translate complex algorithmic logic into scalable architectures and intelligent data pipelines. Driven by peer-reviewed IEEE research and national engineering finals like Flipkart GRiD.
+                Engineering, at its core, is solving constraints through clean, performant systems. I translate complex algorithmic logic into <span class="highlight-text">scalable architectures</span> and <span class="highlight-text">intelligent data pipelines</span> — driven by peer-reviewed IEEE research and national engineering finals like Flipkart GRiD.
             </p>
 
             <!-- Action Buttons -->
@@ -2714,6 +2739,29 @@ window.addEventListener('DOMContentLoaded',function(){
                 <a href="https://www.linkedin.com/in/sudugu-akshitha-reddy-97b183259" target="_blank" class="btn-secondary-glass" style="padding: 16px;">
                     <i class="fab fa-linkedin" style="font-size: 1.2rem;"></i>
                 </a>
+            </div>
+
+            <!-- Impact Stats Grid -->
+            <div class="hero-stats-grid">
+                <div class="hero-stat-card">
+                    <div class="stat-num grad-text">Top 15</div>
+                    <div class="stat-label">SIH Pre-Finalist</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="hero-stat-card">
+                    <div class="stat-num grad-text">1st Place</div>
+                    <div class="stat-label">Webathon 2025 Winner</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="hero-stat-card">
+                    <div class="stat-num grad-text">IEEE</div>
+                    <div class="stat-label">Published Author</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="hero-stat-card">
+                    <div class="stat-num grad-text">10+</div>
+                    <div class="stat-label">Production Projects</div>
+                </div>
             </div>
         </div>
     </section>
@@ -2803,89 +2851,93 @@ window.addEventListener('DOMContentLoaded',function(){
         transform: translateY(-3px);
     }
     </style>
-    <!-- Programming Languages -->
-    <div class="skills-category">
-        <h4><i class="fas fa-code"></i> Programming Languages</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-java"></i> Java <span style="font-size:0.7rem;color:#06b6d4;">(Advanced DSA)</span></div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-python"></i> Python</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js"></i> JavaScript</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-copyright"></i> C</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js-square"></i> TypeScript</div>
-        </div>
-    </div>
-    
-    <!-- Backend & Distributed Infrastructure -->
-    <div class="skills-category">
-        <h4><i class="fas fa-server"></i> Backend &amp; Distributed Infrastructure</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-node-js"></i> Node.js</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-bolt"></i> FastAPI</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-flask"></i> Flask</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-exchange-alt"></i> RESTful APIs</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-search"></i> Elasticsearch <span style="font-size:0.7rem;color:#06b6d4;">(Cluster Indexing)</span></div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-network-wired"></i> Asynchronous Microservices</div>
-        </div>
-    </div>
-
-    <!-- Databases & Vector Storage -->
-    <div class="skills-category">
-        <h4><i class="fas fa-database"></i> Databases &amp; Vector Storage</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> PostgreSQL</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-leaf" style="color:#47A248"></i> MongoDB</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> MySQL</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-vector-square"></i> ChromaDB <span style="font-size:0.7rem;color:#06b6d4;">(Vector Indices)</span></div>
-        </div>
-    </div>
-
-    <!-- AI Pipelines & Modeling -->
-    <div class="skills-category">
-        <h4><i class="fas fa-brain"></i> AI Pipelines &amp; Modeling</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-robot"></i> Large Language Models (LLMs)</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-sliders-h"></i> Fine-Tuning/Alignment</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> Retrieval-Augmented Generation (RAG)</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-gamepad"></i> Reinforcement Learning <span style="font-size:0.7rem;color:#06b6d4;">(Tabular Q-Learning)</span></div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-stream"></i> Sequence Modeling <span style="font-size:0.7rem;color:#06b6d4;">(BiLSTM)</span></div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-flask"></i> Gymnasium</div>
-        </div>
-    </div>
-
-    <!-- Web Development & Frontend -->
-    <div class="skills-category">
-        <h4><i class="fas fa-laptop-code"></i> Web Development &amp; Frontend</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-react"></i> React</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-bolt"></i> Vite</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-css3-alt"></i> TailwindCSS</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-node-js"></i> Express.js</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-html5"></i> HTML5</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-css3"></i> CSS3</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-bootstrap"></i> Bootstrap</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-map-marked-alt"></i> Leaflet</div>
-        </div>
-    </div>
-
-    <!-- Developer Tools & Security -->
-    <div class="skills-category">
-        <h4><i class="fas fa-tools"></i> Developer Tools &amp; Security</h4>
-        <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-git-alt"></i> Git/GitHub</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-paper-plane"></i> Postman</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-file-alt"></i> LaTeX</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-network-wired"></i> NFStream</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-shield-alt"></i> Snort</div>
-        </div>
-    </div>
-
     <!-- Core Computer Science -->
     <div class="skills-category">
         <h4><i class="fas fa-microchip"></i> Core Computer Science</h4>
         <div class="skills-grid">
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> Data Structures and Algorithms (DSA)</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-cubes"></i> Object-Oriented Programming (OOP)</div>
-            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> Database Management Systems (DBMS)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> Data Structures &amp; Algorithms (DSA)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-cubes"></i> Object-Oriented Design (OOD)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-chart-line"></i> Complexity Analysis</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-desktop"></i> Operating Systems (OS)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> DBMS</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-cogs"></i> Systems Software</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-network-wired"></i> Computer Networks</div>
+        </div>
+    </div>
+
+    <!-- Programming Stack -->
+    <div class="skills-category">
+        <h4><i class="fas fa-code"></i> Programming Stack</h4>
+        <div class="skills-grid">
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-js-square"></i> TypeScript</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-python"></i> Python</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-java"></i> Java</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-code"></i> C++</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-copyright"></i> C</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> SQL</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-html5"></i> HTML5</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-css3-alt"></i> CSS3</div>
+        </div>
+    </div>
+
+    <!-- Machine Learning & AI -->
+    <div class="skills-category">
+        <h4><i class="fas fa-brain"></i> Machine Learning &amp; AI</h4>
+        <div class="skills-grid">
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-fire"></i> PyTorch</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-eye"></i> Computer Vision (CNNs)</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-stream"></i> RNNs &amp; LSTMs</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-robot"></i> Transformers</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-wave-square"></i> TCNs &amp; Autoencoders</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-draw-polygon"></i> GANs</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-project-diagram"></i> RAG Pipelines</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-magic"></i> Google Gemini API</div>
+        </div>
+    </div>
+
+    <!-- Software Engineering & Web Development -->
+    <div class="skills-category">
+        <h4><i class="fas fa-laptop-code"></i> Web Development &amp; Software Engineering</h4>
+        <div class="skills-grid">
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-react"></i> React</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-node-js"></i> Node.js</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-server"></i> Express.js</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-bolt"></i> FastAPI</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-flask"></i> Flask</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-exchange-alt"></i> RESTful APIs &amp; Web Services</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-css3"></i> TailwindCSS</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-bootstrap"></i> Bootstrap</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-cube"></i> Three.js</div>
+        </div>
+    </div>
+
+    <!-- Databases & Distributed Frameworks -->
+    <div class="skills-category">
+        <h4><i class="fas fa-database"></i> Databases &amp; Distributed Frameworks</h4>
+        <div class="skills-grid">
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> PostgreSQL</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-leaf" style="color:#47A248"></i> MongoDB</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-database"></i> MySQL</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-vector-square"></i> ChromaDB <span style="font-size:0.7rem;color:#06b6d4;">(Vector Storage)</span></div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-bolt"></i> Redis <span style="font-size:0.7rem;color:#06b6d4;">(In-Memory Caching)</span></div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-chart-bar"></i> InfluxDB <span style="font-size:0.7rem;color:#06b6d4;">(Time-Series)</span></div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-search"></i> Elasticsearch Logic</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-sitemap"></i> Microservices &amp; Concurrency</div>
+        </div>
+    </div>
+
+    <!-- Tools, DevOps & Automation -->
+    <div class="skills-category">
+        <h4><i class="fas fa-tools"></i> Tools, DevOps &amp; Automation</h4>
+        <div class="skills-grid">
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-git-alt"></i> Git &amp; GitHub</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fab fa-docker"></i> Docker</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-paper-plane"></i> Postman</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-cloud"></i> Vercel</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-plug"></i> WebSockets</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-file-alt"></i> LaTeX</div>
+            <div class="skill-item" data-aos="zoom-in"><i class="fas fa-bug"></i> VS Code Debugging</div>
         </div>
     </div>
     </div>
