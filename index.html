@@ -980,9 +980,8 @@
 
         /* Section Animation */
         .section-animate {
-            opacity: 0;
-            transform: translateY(40px) scale(0.97);
-            transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+            opacity: 1;
+            transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1);
         }
         .section-visible {
             opacity: 1 !important;
@@ -993,10 +992,6 @@
         .section {
             padding: 120px 0;
             position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 0.3s;
         }
 
         .section-title {
@@ -1366,17 +1361,16 @@ body.theme-alt5 .achievement-icon {
 
         .achievement-text .details {
             font-size: 15px;
-            color: #9ca3af;
+            color: #cbd5e1;
             line-height: 1.6;
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease;
+            opacity: 1;
+            max-height: none;
+            overflow: visible;
+            margin-top: 6px;
         }
 
         .achievement-item:hover .details {
-            opacity: 1;
-            max-height: 100px;
+            color: #ffffff;
         }
 
         @keyframes pulse {
@@ -1401,7 +1395,6 @@ body.theme-alt5 .achievement-icon {
     border-radius: 2px;
 }
 .experience-item {
-    /* AOS handles opacity and transform for scroll animations */
     position: relative;
     margin-bottom: 40px;
     padding: 22px 24px;
@@ -1411,6 +1404,7 @@ body.theme-alt5 .achievement-icon {
     transition: all 0.4s cubic-bezier(.4,2,.6,1);
     box-shadow: 0 4px 18px rgba(6, 182, 212, 0.10);
     perspective: 1000px;
+    opacity: 1 !important;
 }
 .experience-item:nth-child(2) { animation-delay: 0.2s; }
 .experience-item:nth-child(3) { animation-delay: 0.4s; }
@@ -1465,16 +1459,15 @@ body.theme-alt5 .achievement-icon {
 }
 .exp-text .details {
     font-size: 15px;
-    color: #9ca3af;
+    color: #cbd5e1;
     line-height: 1.6;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.4s ease;
+    opacity: 1 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-top: 6px;
 }
 .experience-item:hover .details {
-    opacity: 1;
-    max-height: 100px;
+    color: #ffffff;
 }
 .experience-item:hover {
     background: rgba(6, 182, 212, 0.14);
@@ -2537,13 +2530,376 @@ footer {
 .cat-data { background: linear-gradient(135deg,#1f2937,#111827); color: #a78bfa; border: 1.5px solid #7c3aed; }
 .cat-web  { background: linear-gradient(135deg,#1a2e1a,#0d1f0d); color: #6ee7b7; border: 1.5px solid #059669; }
 .cat-algo { background: linear-gradient(135deg,#2d1f00,#1c1300); color: #fcd34d; border: 1.5px solid #d97706; }
-.category-desc {
-  color: #94a3b8;
-  font-size: 0.85rem;
-  margin: 0.2rem 0 0 0;
-  padding-left: 0.2rem;
-  font-style: italic;
-}
+        /* ===== FEATURE 1: COMMAND PALETTE (CTRL+K) ===== */
+        .nav-cmd-trigger {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
+            color: #94a3b8;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            font-family: 'Fira Code', monospace;
+        }
+        .nav-cmd-trigger:hover {
+            background: rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+            color: #38bdf8;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+        .cmd-shortcut {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: #e2e8f0;
+        }
+
+        #cmd-palette-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(16px);
+            z-index: 999999;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 10vh;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        #cmd-palette-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cmd-box {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            width: 90vw;
+            max-width: 620px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 182, 212, 0.25);
+            overflow: hidden;
+            transform: translateY(-20px) scale(0.96);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #cmd-palette-modal.active .cmd-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .cmd-input-wrap {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 12px;
+        }
+        .cmd-input-wrap i {
+            color: #38bdf8;
+            font-size: 1.1rem;
+        }
+        .cmd-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 1.05rem;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+        .cmd-input::placeholder {
+            color: #64748b;
+        }
+        .cmd-esc-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94a3b8;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .cmd-results {
+            max-height: 380px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .cmd-group-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 8px 12px 4px 12px;
+        }
+        .cmd-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            color: #cbd5e1;
+            transition: all 0.15s ease;
+            font-size: 0.95rem;
+        }
+        .cmd-item:hover, .cmd-item.selected {
+            background: rgba(6, 182, 212, 0.15);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+        .cmd-item i {
+            color: #38bdf8;
+            margin-right: 12px;
+            width: 18px;
+            text-align: center;
+        }
+        .cmd-item-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        /* ===== FEATURE 2: CYBER TERMINAL WIDGET ===== */
+        .terminal-widget-container {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 720px;
+        }
+        .cyber-term-card {
+            background: rgba(10, 15, 30, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.15);
+            backdrop-filter: blur(20px);
+            text-align: left;
+        }
+        .term-header {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .term-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .term-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+        .term-dot-red { background: #ef4444; }
+        .term-dot-yellow { background: #f59e0b; }
+        .term-dot-green { background: #10b981; }
+
+        .term-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.76rem;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+        .term-body {
+            padding: 18px 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            max-height: 260px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+        .term-output-line {
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        .term-prompt-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .term-prompt-symbol {
+            color: #38bdf8;
+            font-weight: 700;
+        }
+        .term-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            flex: 1;
+        }
+        .term-quick-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 10px 20px 16px 20px;
+            background: rgba(6, 11, 25, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .term-btn {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: #38bdf8;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .term-btn:hover {
+            background: rgba(56, 189, 248, 0.25);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        /* ===== FEATURE 3: PROJECT CATEGORY FILTER & LIGHTBOX MODAL ===== */
+        .project-filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+        .proj-tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94a3b8;
+            padding: 8px 18px;
+            border-radius: 99px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .proj-tab-btn:hover, .proj-tab-btn.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(139, 92, 246, 0.25));
+            border-color: #38bdf8;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.25);
+        }
+
+        /* Generic Glass Lightbox Modal */
+        .portfolio-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 7, 18, 0.88);
+            backdrop-filter: blur(20px);
+            z-index: 9999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .portfolio-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .portfolio-modal-card {
+            background: rgba(13, 20, 38, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 50px rgba(6, 182, 212, 0.25);
+            transform: scale(0.94);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio-modal-overlay.active .portfolio-modal-card {
+            transform: scale(1);
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .modal-close-btn:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+        .modal-img-preview {
+            width: 100%;
+            max-height: 360px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .modal-desc {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+
+        /* ===== FEATURE 4: CUSTOM CURSOR FOLLOWER ===== */
+        @media (pointer: fine) {
+            .custom-cursor-dot, .custom-cursor-ring {
+                pointer-events: none;
+                position: fixed;
+                top: 0; left: 0;
+                border-radius: 50%;
+                z-index: 99999999;
+                transition: opacity 0.3s ease, transform 0.15s ease-out;
+            }
+            .custom-cursor-dot {
+                width: 8px; height: 8px;
+                background: #38bdf8;
+                box-shadow: 0 0 10px #38bdf8;
+                transform: translate(-50%, -50%);
+            }
+            .custom-cursor-ring {
+                width: 36px; height: 36px;
+                border: 1.5px solid rgba(56, 189, 248, 0.5);
+                transform: translate(-50%, -50%);
+                transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+            }
+            .custom-cursor-ring.hovered {
+                width: 54px; height: 54px;
+                border-color: #818cf8;
+                background: rgba(129, 140, 248, 0.12);
+            }
+        }
 
 </style>
 </head>
@@ -2733,7 +3089,11 @@ footer {
                 setTimeout(function() {
                     loader.style.display = 'none';
                     if (animId) cancelAnimationFrame(animId);
-                }, 900);
+                    if (window.AOS) {
+                        window.AOS.refreshHard();
+                    }
+                    window.dispatchEvent(new Event('scroll'));
+                }, 450);
             }
         }
 
@@ -2778,7 +3138,6 @@ footer {
         <a href="https://github.com/AkshithaReddy005" target="_blank" title="GitHub Profile"><i class="fab fa-github"></i></a>
     </div>
 
-    <!-- Header -->
     <header>
         <div class="container">
             <nav class="professional-navbar">
@@ -2791,6 +3150,9 @@ footer {
         <li><a href="#publications">Publications</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="nav-cmd-trigger" id="cmd-palette-btn" title="Command Palette (Ctrl+K)">
+        <i class="fas fa-search"></i> <span class="cmd-shortcut">Ctrl+K</span>
+    </button>
     <div class="menu-btn">☰</div>
 </nav>
         </div>
@@ -2882,8 +3244,32 @@ footer {
                 </div>
                 <div class="stat-divider"></div>
                 <div class="hero-stat-card">
-                    <div class="stat-num grad-text">10+</div>
-                    <div class="stat-label">Production Projects</div>
+            <!-- Interactive Cyber Terminal Widget -->
+            <div class="terminal-widget-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="cyber-term-card">
+                    <div class="term-header">
+                        <div class="term-dots">
+                            <span class="term-dot term-dot-red"></span>
+                            <span class="term-dot term-dot-yellow"></span>
+                            <span class="term-dot term-dot-green"></span>
+                        </div>
+                        <span class="term-title">akshitha@portfolio:~ (zsh)</span>
+                        <span style="font-size:0.7rem; color:#64748b;">Interactive Terminal</span>
+                    </div>
+                    <div class="term-body" id="term-body-output">
+                        <div class="term-output-line">Type <span style="color:#38bdf8; font-weight:bold;">help</span> or click quick actions below to explore:</div>
+                    </div>
+                    <div class="term-prompt-line" style="padding: 0 20px 10px 20px;">
+                        <span class="term-prompt-symbol">❯</span>
+                        <input type="text" id="term-command-input" class="term-input" placeholder="Type a command (e.g. skills, projects, contact, bio, clear)..." autocomplete="off">
+                    </div>
+                    <div class="term-quick-btns">
+                        <button class="term-btn" onclick="runTermCmd('bio')">⚡ bio</button>
+                        <button class="term-btn" onclick="runTermCmd('skills')">🧠 skills</button>
+                        <button class="term-btn" onclick="runTermCmd('projects')">🚀 projects</button>
+                        <button class="term-btn" onclick="runTermCmd('contact')">📬 contact</button>
+                        <button class="term-btn" onclick="runTermCmd('clear')">🧹 clear</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3821,16 +4207,15 @@ body, html, * {
 }
 .achievement-text .details {
     font-size: 15px;
-    color: #9ca3af;
+    color: #cbd5e1;
     line-height: 1.6;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.4s ease;
+    opacity: 1 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-top: 6px;
 }
 .achievement-item:hover .details {
-    opacity: 1;
-    max-height: 100px;
+    color: #ffffff;
 }
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
@@ -3871,6 +4256,10 @@ body, html, * {
   .achievement-text {
     font-size: 0.97rem;
   }
+.details {
+    opacity: 1 !important;
+    max-height: none !important;
+    overflow: visible !important;
 }
 </style>
     <!-- AOS Animate On Scroll JS -->
@@ -3947,6 +4336,287 @@ body, html, * {
               });
           });
       });
+    </script>
+
+    <!-- Command Palette Overlay -->
+    <div id="cmd-palette-modal">
+        <div class="cmd-box">
+            <div class="cmd-input-wrap">
+                <i class="fas fa-search"></i>
+                <input type="text" id="cmd-search-input" class="cmd-input" placeholder="Type a command or search sections..." autocomplete="off">
+                <span class="cmd-esc-badge">ESC</span>
+            </div>
+            <div class="cmd-results" id="cmd-results-list">
+                <!-- Group 1: Navigation -->
+                <div class="cmd-group-title">Navigation</div>
+                <div class="cmd-item" onclick="execCmdNav('#home')">
+                    <span><i class="fas fa-home"></i> Home Section</span>
+                    <span class="cmd-item-tag">Jump</span>
+                </div>
+                <div class="cmd-item" onclick="execCmdNav('#about')">
+                    <span><i class="fas fa-user"></i> About &amp; Skills</span>
+                    <span class="cmd-item-tag">Jump</span>
+                </div>
+                <div class="cmd-item" onclick="execCmdNav('#experience')">
+                    <span><i class="fas fa-briefcase"></i> Experience</span>
+                    <span class="cmd-item-tag">Jump</span>
+                </div>
+                <div class="cmd-item" onclick="execCmdNav('#projects')">
+                    <span><i class="fas fa-code"></i> Projects</span>
+                    <span class="cmd-item-tag">Jump</span>
+                </div>
+                <div class="cmd-item" onclick="execCmdNav('#achievements')">
+                    <span><i class="fas fa-trophy"></i> Achievements &amp; Certs</span>
+                    <span class="cmd-item-tag">Jump</span>
+                </div>
+                <div class="cmd-item" onclick="execCmdNav('#contact')">
+                    <span><i class="fas fa-envelope"></i> Contact Me</span>
+                    <span class="cmd-item-tag">Jump</span>
+                </div>
+
+                <!-- Group 2: Actions -->
+                <div class="cmd-group-title">Quick Actions</div>
+                <div class="cmd-item" onclick="window.open('https://drive.google.com/file/d/14gyzGLQeU2MbqN72D098gMaXBvLcz-NK/view?usp=sharing', '_blank')">
+                    <span><i class="fas fa-file-pdf"></i> View &amp; Download Resume</span>
+                    <span class="cmd-item-tag">PDF</span>
+                </div>
+                <div class="cmd-item" onclick="window.open('https://github.com/AkshithaReddy005', '_blank')">
+                    <span><i class="fab fa-github"></i> Open GitHub Profile</span>
+                    <span class="cmd-item-tag">External</span>
+                </div>
+                <div class="cmd-item" onclick="window.open('https://www.linkedin.com/in/akshitha-reddy-6217452b0/', '_blank')">
+                    <span><i class="fab fa-linkedin"></i> Open LinkedIn Profile</span>
+                    <span class="cmd-item-tag">External</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Glass Lightbox Modal (Certificates & Project Demos) -->
+    <div class="portfolio-modal-overlay" id="general-modal">
+        <div class="portfolio-modal-card">
+            <button class="modal-close-btn" onclick="closeGeneralModal()"><i class="fas fa-times"></i></button>
+            <img id="modal-img" class="modal-img-preview" src="" alt="Preview" style="display:none;">
+            <h3 id="modal-title" class="modal-title">Modal Title</h3>
+            <p id="modal-desc" class="modal-desc">Modal description content...</p>
+            <div id="modal-actions" style="margin-top:20px;"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor Follower Markup -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="custom-cursor-ring" id="cursor-ring"></div>
+
+    <script>
+    /* ===== COMMAND PALETTE LOGIC ===== */
+    const cmdBtn = document.getElementById('cmd-palette-btn');
+    const cmdModal = document.getElementById('cmd-palette-modal');
+    const cmdInput = document.getElementById('cmd-search-input');
+    const cmdList = document.getElementById('cmd-results-list');
+
+    function openCmdPalette() {
+        if (cmdModal) {
+            cmdModal.classList.add('active');
+            if (cmdInput) {
+                cmdInput.value = '';
+                cmdInput.focus();
+            }
+        }
+    }
+    function closeCmdPalette() {
+        if (cmdModal) cmdModal.classList.remove('active');
+    }
+
+    if (cmdBtn) cmdBtn.addEventListener('click', openCmdPalette);
+
+    window.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (cmdModal && cmdModal.classList.contains('active')) {
+                closeCmdPalette();
+            } else {
+                openCmdPalette();
+            }
+        }
+        if (e.key === 'Escape' && cmdModal && cmdModal.classList.contains('active')) {
+            closeCmdPalette();
+        }
+    });
+
+    if (cmdModal) {
+        cmdModal.addEventListener('click', function(e) {
+            if (e.target === cmdModal) closeCmdPalette();
+        });
+    }
+
+    function execCmdNav(targetId) {
+        closeCmdPalette();
+        const el = document.querySelector(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Filter command items on search typing
+    if (cmdInput && cmdList) {
+        cmdInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const items = cmdList.querySelectorAll('.cmd-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    /* ===== CYBER TERMINAL INTERACTIVE LOGIC ===== */
+    const termInput = document.getElementById('term-command-input');
+    const termBody = document.getElementById('term-body-output');
+
+    const termCommands = {
+        'help': 'Available commands: <span style="color:#38bdf8;">bio</span>, <span style="color:#38bdf8;">skills</span>, <span style="color:#38bdf8;">projects</span>, <span style="color:#38bdf8;">contact</span>, <span style="color:#38bdf8;">certs</span>, <span style="color:#38bdf8;">clear</span>',
+        'bio': '⚡ <strong>Akshitha Reddy</strong> | Full-Stack & AI Architect<br>Final-Year IT Engineer @ Vasavi College of Engineering (CGPA 8.49). 2x IEEE Author & MSME Seed Grant Winner.',
+        'skills': '🧠 <strong>Languages & Frameworks:</strong> Python, C++, Java, JavaScript, React, Node.js, Express, PyTorch, TensorFlow, Gymnasium RL.',
+        'projects': '🚀 <strong>Featured Projects:</strong><br>1. <i>MASTR-Q</i> (Reinforcement Learning Route Optimization)<br>2. <i>GLOF Deep Learning</i> (IEEE Published Disaster Predictive System)<br>3. <i>Voice Emergency Automation</i> (Real-time Audio Frequency Parser)',
+        'contact': '📬 <strong>Email:</strong> akshithareddy005@gmail.com | <strong>LinkedIn:</strong> sudugu-akshitha-reddy-97b183259 | <strong>GitHub:</strong> AkshithaReddy005',
+        'certs': '🏆 <strong>Key Accomplishments:</strong><br>• MSME INR 7 Lakh Incubated Grant Winner<br>• Webathon 2025 First Place Winner<br>• SIH National Pre-Finalist (Top 15)<br>• Top 30 Global Contributor (SSOC Season 4)',
+        'clear': ''
+    };
+
+    function runTermCmd(cmdName) {
+        if (!termBody) return;
+        const cleanCmd = cmdName.trim().toLowerCase();
+
+        if (cleanCmd === 'clear') {
+            termBody.innerHTML = '<div class="term-output-line">Type <span style="color:#38bdf8; font-weight:bold;">help</span> or click quick actions below to explore:</div>';
+            return;
+        }
+
+        const promptLine = document.createElement('div');
+        promptLine.className = 'term-output-line';
+        promptLine.innerHTML = `<span style="color:#38bdf8;">❯ ${cleanCmd}</span>`;
+        termBody.appendChild(promptLine);
+
+        const responseLine = document.createElement('div');
+        responseLine.className = 'term-output-line';
+        responseLine.style.color = '#cbd5e1';
+
+        if (termCommands[cleanCmd]) {
+            responseLine.innerHTML = termCommands[cleanCmd];
+        } else {
+            responseLine.innerHTML = `<span style="color:#ef4444;">Command not recognized: "${cleanCmd}". Type <b>help</b> for a list of valid commands.</span>`;
+        }
+        termBody.appendChild(responseLine);
+        termBody.scrollTop = termBody.scrollHeight;
+    }
+
+    if (termInput) {
+        termInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                runTermCmd(this.value);
+                this.value = '';
+            }
+        });
+    }
+
+    /* ===== PROJECT FILTERING & LIGHTBOX LOGIC ===== */
+    function filterProjects(cat) {
+        const tabs = document.querySelectorAll('.proj-tab-btn');
+        tabs.forEach(t => t.classList.remove('active'));
+
+        const activeTab = Array.from(tabs).find(t => t.textContent.toLowerCase().includes(cat) || (cat === 'all' && t.textContent.includes('All')));
+        if (activeTab) activeTab.classList.add('active');
+
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach(card => {
+            if (cat === 'all') {
+                card.style.display = 'block';
+            } else {
+                const infoText = card.textContent.toLowerCase();
+                if (cat === 'ai' && (infoText.includes('ai') || infoText.includes('learning') || infoText.includes('mastr') || infoText.includes('glof'))) {
+                    card.style.display = 'block';
+                } else if (cat === 'web' && (infoText.includes('full-stack') || infoText.includes('agricycle') || infoText.includes('techsavishkaar') || infoText.includes('react'))) {
+                    card.style.display = 'block';
+                } else if (cat === 'audio' && (infoText.includes('voice') || infoText.includes('automation') || infoText.includes('emergency') || infoText.includes('tracker'))) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    /* ===== LIGHTBOX MODAL CONTROLLER ===== */
+    function openGeneralModal(title, desc, imgSrc) {
+        const modal = document.getElementById('general-modal');
+        const mTitle = document.getElementById('modal-title');
+        const mDesc = document.getElementById('modal-desc');
+        const mImg = document.getElementById('modal-img');
+
+        if (mTitle) mTitle.textContent = title;
+        if (mDesc) mDesc.innerHTML = desc;
+
+        if (imgSrc && mImg) {
+            mImg.src = imgSrc;
+            mImg.style.display = 'block';
+        } else if (mImg) {
+            mImg.style.display = 'none';
+        }
+
+        if (modal) modal.classList.add('active');
+    }
+
+    function closeGeneralModal() {
+        const modal = document.getElementById('general-modal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    // Attach click events to achievement images for Lightbox Zoom
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.achievement-img-inline img, .project-img img').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const parent = this.closest('.achievement-item, .project-card');
+                const title = parent ? (parent.querySelector('h4, h3')?.textContent || 'Preview') : 'Image Preview';
+                const desc = parent ? (parent.querySelector('.details, p')?.textContent || '') : '';
+                openGeneralModal(title, desc, this.src);
+            });
+        });
+    });
+
+    /* ===== CUSTOM CURSOR FOLLOWER LOGIC ===== */
+    (function() {
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        if (!dot || !ring || window.matchMedia('(pointer: coarse)').matches) return;
+
+        let mouseX = -100, mouseY = -100;
+        let ringX = -100, ringY = -100;
+
+        window.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        });
+
+        function renderCursor() {
+            ringX += (mouseX - ringX) * 0.18;
+            ringY += (mouseY - ringY) * 0.18;
+            ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+            requestAnimationFrame(renderCursor);
+        }
+        renderCursor();
+
+        // Magnetic Hover Effect on interactive elements
+        document.querySelectorAll('a, button, .project-card, .achievement-item, .term-btn, .cmd-item').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+        });
+    })();
     </script>
 </body>
 </html>
