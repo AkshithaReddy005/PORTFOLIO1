@@ -1,6 +1,6 @@
 <!-- TYPING SVG HEADER -->
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=fb5c90&center=true&vCenter=true&width=600&lines=Hi+there%2C+I'm+Akshitha+Reddy!+%F0%9F%91%8B;Final+Year+IT+Student+%40+Vasavi+College;Flipkart+GRiD+7.0+National+Finalist+(Top+0.03%25);Published+IEEE+Author+%26+Deep+Learning+Researcher;Full-Stack+%26+AI+Systems+Engineer" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=fb5c90&center=true&vCenter=true&width=600&lines=Hi+there%2C+I'm+Akshitha+Reddy!+%F0%9F%91%8B;Final+Year+IT+Student+%40+Vasavi+College;Flipkart+GRiD+7.0+National+Finalist+(Top+0.03%25);2x+Published+IEEE+Author+%26+Researcher;Full-Stack+%26+AI+Systems+Engineer" alt="Typing SVG" />
 </p>
 
 <!-- PROFILE CARD & BADGES -->
@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/Akshitha%20Reddy-fb5c90?style=for-the-badge&logo=github&logoColor=white"/>
   <img src="https://img.shields.io/badge/Vasavi%20College%20of%20Engineering-BE%20IT%20(2023--2027)-0077B5?style=for-the-badge&logo=graduation-cap&logoColor=white"/>
   <img src="https://img.shields.io/badge/CGPA-8.38%2F10.00-4EA94B?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/IEEE-2x%20Published%20Author-8E44AD?style=for-the-badge"/>
   
   <br/>
 
@@ -34,7 +35,7 @@
 
 ## 💡 About Me
 
-I am a **Final Year Information Technology student** at **Vasavi College of Engineering** (CGPA: 8.38/10.00), **National Hackathon Finalist**, and **published IEEE Deep Learning Researcher**.
+I am a **Final Year Information Technology student** at **Vasavi College of Engineering** (CGPA: 8.38/10.00), **National Hackathon Finalist**, and **2x published IEEE Deep Learning Researcher**.
 
 I specialize in **Object-Oriented Design (OOD)**, robust database architectures, real-time data pipelines, and fault-tolerant full-stack frameworks. Highly proficient in utilizing modern **Agentic AI coding harnesses**, engineering scalable **RESTful APIs**, processing high-throughput telemetry datasets, and building data-driven interfaces using **JavaScript**, **TypeScript**, **React**, **Python**, **PyTorch**, and **SQL**.
 
@@ -55,9 +56,14 @@ I specialize in **Object-Oriented Design (OOD)**, robust database architectures,
 
 ---
 
-## 📜 Peer-Reviewed Publication
+## 📜 Peer-Reviewed Publications
 
-> 📄 **"A Deep Learning Approach to Early Warning Systems for Glacial Lake Outburst Floods (GLOFs)"**  
+> 📄 **1. "GTEE-Pro: Dual-Stream Bayesian Framework for Imputation of Multivariate Time Series using Spectral Fusion via Uncertainty-Aware Approach"**  
+> **Accepted for Presentation at IEEE IC3-2026 Proceedings** *(Jointly organized by JIIT Noida & University of Florida, Gainesville, USA)*  
+> *Co-Authors: Leelavathy. B, Akshitha Reddy Sudugu, Allampally Akshitha*  
+> *Engineered a dual-stream framework integrating Discrete Wavelet Transform (DWT), Fourier Neural Operator (FNO), Multi-head Dynamic Graph Attention Networks (GAT), and an uncertainty-aware Bayesian Fusion Gate to resolve Industrial IoT blackout gaps, achieving an **11.4% MAE accuracy improvement** over iTransformer.*
+
+> 📄 **2. "A Deep Learning Approach to Early Warning Systems for Glacial Lake Outburst Floods (GLOFs)"**  
 > **Published in IEEE IC3-2025 Proceedings**  
 > *Modeled complex spatial-temporal environmental dynamics utilizing deep sequential neural frameworks (TCNs, LSTMs, and Autoencoders).*
 
