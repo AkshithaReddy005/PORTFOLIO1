@@ -32,179 +32,163 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ===== EXECUTIVE PROFESSIONAL GLASS PRELOADER ===== */
+        /* ===== ULTRA-SLEEK MODERN PRELOADER ===== */
         #main-loader {
             position: fixed;
             inset: 0;
-            background: #060913;
+            background: #030712;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             overflow: hidden;
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             user-select: none;
+            cursor: pointer;
         }
-        #main-loader.hidden {
+        #main-loader.loader-hidden {
             opacity: 0;
-            transform: scale(1.04);
+            transform: translateY(-20px) scale(0.98);
             pointer-events: none;
         }
 
-        /* Soft Ambient Glow Flares */
-        .exec-glow-flare1 {
+        .loader-bg-glow1 {
             position: absolute;
-            width: 480px; height: 480px;
+            width: 550px; height: 550px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
-            top: 20%; left: 25%;
-            filter: blur(100px);
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.18) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(120px);
             pointer-events: none;
+            animation: loaderPulse 4s ease-in-out infinite alternate;
         }
-        .exec-glow-flare2 {
-            position: absolute;
-            width: 450px; height: 450px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.14) 0%, transparent 70%);
-            bottom: 20%; right: 25%;
-            filter: blur(100px);
-            pointer-events: none;
+        @keyframes loaderPulse {
+            0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
         }
 
-        /* Executive Glass Card */
-        .exec-loader-card {
-            background: rgba(10, 15, 30, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 28px;
-            padding: 46px 54px;
+        .loader-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            backdrop-filter: blur(28px);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 45px rgba(6, 182, 212, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            max-width: 440px;
-            width: 90vw;
             position: relative;
             z-index: 2;
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-        }
-        .exec-loader-card:hover {
-            border-color: rgba(6, 182, 212, 0.35);
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.8), 0 0 55px rgba(6, 182, 212, 0.25);
+            padding: 20px;
         }
 
-        /* Monogram Badge */
-        .exec-mono-badge {
-            width: 78px;
-            height: 78px;
+        /* Glowing Monogram Ring */
+        .loader-avatar-wrapper {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .loader-ring {
+            position: absolute;
+            inset: 0;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(139,92,246,0.2));
-            border: 1.5px solid rgba(6,182,212,0.4);
+            padding: 2.5px;
+            background: conic-gradient(from 0deg, #06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinRing 2s linear infinite;
+        }
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+        .loader-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Fira Code', monospace;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            color: #06b6d4;
-            margin-bottom: 20px;
-            box-shadow: 0 0 30px rgba(6,182,212,0.3);
-            position: relative;
-            transition: all 0.3s ease;
+            color: #38bdf8;
+            box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.2), 0 0 35px rgba(6, 182, 212, 0.25);
+            letter-spacing: -0.5px;
         }
-        .exec-mono-badge::after {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 1.5px dashed rgba(6,182,212,0.4);
-            animation: execMonoSpin 10s linear infinite;
-        }
-        @keyframes execMonoSpin { 100% { transform: rotate(360deg); } }
 
-        /* Typography */
-        .exec-title {
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 1.8rem;
+        /* Brand Text */
+        .loader-brand {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-size: 2.1rem;
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.8px;
             margin-bottom: 6px;
+            line-height: 1.2;
         }
-        .exec-title span {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #8b5cf6 100%);
+        .loader-brand span {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .exec-sub {
+        .loader-tagline {
             font-family: 'Fira Code', monospace;
             font-size: 0.76rem;
             color: #94a3b8;
-            letter-spacing: 2.5px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+            opacity: 0.9;
         }
 
-        /* Progress Bar Box */
-        .exec-progress-box {
-            width: 100%;
+        /* Progress Bar Container */
+        .loader-progress-wrap {
+            width: 240px;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            align-items: center;
         }
-        .exec-track {
+        .loader-bar-track {
             width: 100%;
-            height: 4px;
+            height: 3px;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 99px;
             overflow: hidden;
             position: relative;
         }
-        .exec-fill {
+        .loader-bar-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
             border-radius: 99px;
-            box-shadow: 0 0 15px #06b6d4;
-            transition: width 0.15s ease;
+            box-shadow: 0 0 12px #38bdf8;
+            transition: width 0.12s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .exec-readout {
+        .loader-meta {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
         }
-        .exec-status-txt { color: #06b6d4; }
-        .exec-pct-txt { color: #ffffff; font-weight: 700; }
-
-        /* Launch Button */
-        .exec-launch-btn {
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 14px;
-            font-family: 'Inter', system-ui, sans-serif;
+        .loader-status {
+            color: #64748b;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+        }
+        .loader-percentage {
+            color: #38bdf8;
             font-weight: 700;
-            font-size: 0.9rem;
-            padding: 12px 28px;
-            margin-top: 20px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.5);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            outline: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .exec-launch-btn:hover {
-            background: linear-gradient(135deg, #0891b2, #2563eb);
-            transform: translateY(-2px);
-            box-shadow: 0 14px 35px -5px rgba(6, 182, 212, 0.7);
         }
 
         /* Video Background with Subtle Parallax */
@@ -2543,29 +2527,26 @@ footer {
     });
     </script>
 
-    <!-- Executive Professional Glass Preloader -->
+    <!-- Ultra-Sleek Modern Preloader -->
     <div id="main-loader" aria-label="Loading portfolio">
-        <div class="exec-glow-flare1"></div>
-        <div class="exec-glow-flare2"></div>
+        <div class="loader-bg-glow1"></div>
+        <div class="loader-content">
+            <div class="loader-avatar-wrapper">
+                <div class="loader-ring"></div>
+                <div class="loader-avatar">&lt;AR /&gt;</div>
+            </div>
+            <h2 class="loader-brand">Akshitha <span>Reddy</span></h2>
+            <div class="loader-tagline">Full-Stack &amp; AI Architect</div>
 
-        <div class="exec-loader-card" id="exec-loader-card">
-            <div class="exec-mono-badge">&lt;AR /&gt;</div>
-            <h2 class="exec-title">Akshitha <span>Reddy</span></h2>
-            <div class="exec-sub">Full-Stack &amp; AI Architect</div>
-
-            <div class="exec-progress-box">
-                <div class="exec-track">
-                    <div class="exec-fill" id="exec-loader-fill"></div>
+            <div class="loader-progress-wrap">
+                <div class="loader-bar-track">
+                    <div class="loader-bar-fill" id="exec-loader-fill"></div>
                 </div>
-                <div class="exec-readout">
-                    <span class="exec-status-txt" id="exec-status-txt">INITIALIZING SYSTEM...</span>
-                    <span class="exec-pct-txt" id="exec-pct-txt">0%</span>
+                <div class="loader-meta">
+                    <span class="loader-status" id="exec-status-txt">Loading portfolio</span>
+                    <span class="loader-percentage" id="exec-pct-txt">0%</span>
                 </div>
             </div>
-
-            <button class="exec-launch-btn" id="exec-launch-btn">
-                Explore Portfolio <i class="fas fa-arrow-right"></i>
-            </button>
         </div>
     </div>
 
@@ -2575,71 +2556,54 @@ footer {
         const fill = document.getElementById('exec-loader-fill');
         const pctTxt = document.getElementById('exec-pct-txt');
         const statusTxt = document.getElementById('exec-status-txt');
-        const launchBtn = document.getElementById('exec-launch-btn');
         const loader = document.getElementById('main-loader');
-        const card = document.getElementById('exec-loader-card');
 
-        // Smooth Parallax Card Tilt
-        if (card) {
-            window.addEventListener('mousemove', function(e) {
-                const cx = window.innerWidth / 2;
-                const cy = window.innerHeight / 2;
-                const dx = (e.clientX - cx) / cx;
-                const dy = (e.clientY - cy) / cy;
-                card.style.transform = 'perspective(1000px) rotateY(' + (dx * 10) + 'deg) rotateX(' + (-dy * 10) + 'deg)';
-            });
+        let dismissed = false;
+
+        function dismissLoader() {
+            if (dismissed) return;
+            dismissed = true;
+            if (fill) fill.style.width = '100%';
+            if (pctTxt) pctTxt.textContent = '100%';
+            if (statusTxt) statusTxt.textContent = 'Welcome';
+
+            if (loader) {
+                loader.classList.add('loader-hidden');
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 800);
+            }
         }
 
-        const phrases = [
-            'INITIALIZING KERNEL...',
-            'LOADING ARCHITECTURES...',
-            'OPTIMIZING AI PIPELINES...',
-            'SYSTEM READY'
-        ];
-
-        let readyToLaunch = false;
+        let isLoaded = false;
+        window.addEventListener('load', function() {
+            isLoaded = true;
+        });
 
         const timer = setInterval(function() {
-            pct = Math.min(pct + (pct < 70 ? 14 : 7), 100);
+            if (pct < 90) {
+                pct += Math.floor(Math.random() * 12) + 8;
+            } else if (isLoaded || pct >= 95) {
+                pct = 100;
+            }
+
+            if (pct > 100) pct = 100;
+
             if (fill) fill.style.width = pct + '%';
             if (pctTxt) pctTxt.textContent = Math.round(pct) + '%';
 
-            if (statusTxt) {
-                if (pct < 35) statusTxt.textContent = phrases[0];
-                else if (pct < 70) statusTxt.textContent = phrases[1];
-                else if (pct < 100) statusTxt.textContent = phrases[2];
-                else statusTxt.textContent = phrases[3];
-            }
-
-            if (pct >= 100 && !readyToLaunch) {
-                readyToLaunch = true;
+            if (pct >= 100) {
                 clearInterval(timer);
-                if (launchBtn) {
-                    launchBtn.style.transform = 'scale(1.05)';
-                    launchBtn.style.boxShadow = '0 12px 35px rgba(6, 182, 212, 0.7)';
-                }
+                setTimeout(dismissLoader, 180);
             }
-        }, 50);
+        }, 35);
 
-        function dismissLoader() {
-            clearInterval(timer);
-            if (fill) fill.style.width = '100%';
-            if (pctTxt) pctTxt.textContent = '100%';
-            if (statusTxt) statusTxt.textContent = phrases[3];
+        // Safety fallback timeout (1.2s max)
+        setTimeout(dismissLoader, 1200);
 
-            if (loader) {
-                loader.style.opacity = '0';
-                loader.style.transform = 'scale(1.04)';
-                setTimeout(function() { loader.style.display = 'none'; }, 700);
-            }
-        }
-
-        if (launchBtn) launchBtn.addEventListener('click', dismissLoader);
-        window.addEventListener('keydown', function(e) {
-            if ((e.code === 'Space' || e.code === 'Enter') && loader.style.display !== 'none') {
-                dismissLoader();
-            }
-        });
+        // Fast tap/click dismiss fallback
+        if (loader) loader.addEventListener('click', dismissLoader);
+        window.addEventListener('keydown', dismissLoader);
     })();
     </script>
 
